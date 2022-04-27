@@ -42,7 +42,6 @@ public class LeatherTask extends BukkitRunnable {
             ItemStack chestplate = new ItemStack(Material.IRON_CHESTPLATE);
             player.getEquipment().setChestplate(chestplate);
         }
-
     }
 
     public void changeItemColor(Color color) {

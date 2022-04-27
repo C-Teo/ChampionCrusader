@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class RespawnClassTask extends BukkitRunnable {
@@ -31,11 +32,13 @@ public class RespawnClassTask extends BukkitRunnable {
             player.getInventory().addItem(new ItemStack(Material.ARROW,4));
 
             // Custom Arrows
+
             // Slowness Arrows
             ItemStack slowness = new ItemStack(Material.TIPPED_ARROW,2);
             PotionMeta slownessmeta = (PotionMeta) slowness.getItemMeta();
             slownessmeta.setBasePotionData(new PotionData(PotionType.SLOWNESS));
             slowness.setItemMeta(slownessmeta);
+
             // Weakness Arrows
             ItemStack weakness = new ItemStack(Material.TIPPED_ARROW,2);
             PotionMeta weaknessmeta = (PotionMeta) weakness.getItemMeta();
@@ -55,14 +58,19 @@ public class RespawnClassTask extends BukkitRunnable {
             player.getInventory().addItem(new ItemStack(Material.STONE_AXE));
 
             // Giving Redstone
-            ItemStack blood = new ItemStack(Material.REDSTONE,1);
-            ItemMeta bloodmeta = (ItemMeta)blood.getItemMeta();
-            bloodmeta.setDisplayName("Rage Ability");
-            bloodmeta.setLore(Collections.singletonList("Collect 3 and Click to activate RAGE"));
-            blood.setItemMeta(bloodmeta);
+            ItemStack rage = new ItemStack(Material.REDSTONE,1);
+            ItemMeta ragemeta = (ItemMeta)rage.getItemMeta();
+
+            // Set Display and Lore
+            ragemeta.setDisplayName("Essence Of Rage");
+            ArrayList<String> redLore = new ArrayList<String>(); // Lore list
+            redLore.add("Collect 2 and Click to activate RAGE!");
+            redLore.add("4 for SUPER RAGE! 6 for ULTRA RAGE");
+            ragemeta.setLore(redLore);
+            rage.setItemMeta(ragemeta);
 
             // Giving Potions
-            player.getInventory().addItem(blood);
+            player.getInventory().addItem(rage);
         }
     }
 }

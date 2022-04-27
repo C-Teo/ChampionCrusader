@@ -45,12 +45,13 @@ public class RespawnTask extends BukkitRunnable {
         if (playerKiller != null) { // If the killer was a player
 
             // Send messages to player in chat
-            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY + "] " +
-                    ChatColor.RED + playerKiller.getDisplayName() + " has slayed you!");
+            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY + "] "
+                    + playerKiller.getDisplayName() + " has slayed you!");
 
             // Send message to killer in chat
-            playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY + "] " +
-                    ChatColor.RED + "You slayed " + player.getName());
+            playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                    + "]" + ChatColor.WHITE + " You have slayed " + player.getDisplayName());
+
 
             // Play sound for killer as well
             playerKiller.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1.0f, 1.0f);
@@ -59,7 +60,7 @@ public class RespawnTask extends BukkitRunnable {
 
             // Send only message to player
             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY + "] " +
-                    ChatColor.RED + "You've been slain by a monster!");
+                    ChatColor.WHITE + "You've been slain by a monster!");
 
         }
 

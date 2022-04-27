@@ -20,79 +20,77 @@ import java.util.Collections;
 public class BerserkerCommand implements CommandExecutor {
 
     private final ChampionCrusader testPlugin;
-
-    public BerserkerCommand(ChampionCrusader testPlugin) {this.testPlugin = testPlugin;
-    }
+    public BerserkerCommand(ChampionCrusader testPlugin) { this.testPlugin = testPlugin; }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender instanceof Player) {
+        if (sender instanceof Player) { // If commander user is a player
 
-            Player p = (Player) sender;
+            Player player = (Player) sender; // Player Variable
 
-            if (p.hasPermission("champions.select")) {
+            if (player.hasPermission("champions.select")) { // Check for permission
 
-            // Resetting Character and Inventory
-            p.setHealth(20);
-            p.getInventory().clear();
-            p.getEquipment().clear();
-            for (PotionEffect effect : p.getActivePotionEffects())
-                p.removePotionEffect(effect.getType());
+                // Resetting Player health and Inventory
+                player.setHealth(20);
+                player.getInventory().clear();
+                player.getEquipment().clear();
 
-            p.getEquipment().setHelmet(null);
-            p.getEquipment().setChestplate(null);
-            p.getEquipment().setLeggings(null);
-            p.getEquipment().setBoots(null);
+                // Clear each potion effect
+                for (PotionEffect effect : player.getActivePotionEffects()) { player.removePotionEffect(effect.getType()); }
 
-            // Giving and Removing Tags
-            p.getScoreboardTags().add("berserker");
-            p.getScoreboardTags().remove("mage");
-            p.getScoreboardTags().remove("paladin");
-            p.getScoreboardTags().remove("ranger");
+                // Set player armor to nothing
+                player.getEquipment().setHelmet(null);
+                player.getEquipment().setChestplate(null);
+                player.getEquipment().setLeggings(null);
+                player.getEquipment().setBoots(null);
 
-            // UI
-            p.sendMessage(ChatColor.GREEN + "You have picked" + ChatColor.RED + " Berserker");
-            p.sendTitle(ChatColor.GREEN + "You have picked" + ChatColor.RED + " Berserker","Good Luck",1,50,1);
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
+                // Giving and Removing Tags
+                player.getScoreboardTags().add("berserker");
+                player.getScoreboardTags().remove("mage");
+                player.getScoreboardTags().remove("paladin");
+                player.getScoreboardTags().remove("ranger");
 
-            p.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "The Berserker is a powerful melee combatant. Collect Essence of Rage on kills, save up enough and you can activate RAGE by right clicking! More you save the better the buffs!");
+                // Graphical User Interface
+                player.sendMessage(ChatColor.GREEN + "You have picked" + ChatColor.RED + " Berserker");
+                player.sendTitle(ChatColor.GREEN + "You have picked" + ChatColor.RED + " Berserker",
+                        "Good Luck",1,50,1);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
 
-            // Passing Variable
-            BukkitTask leatherTask = new LeatherTask(p).runTask(testPlugin);
+                player.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "The Berserker is a powerful melee combatant. " +
+                        "Collect Essence of Rage on kills, save up enough and you can activate RAGE by right clicking! " +
+                        "More you save the better the buffs!");
 
-            // Giving Items
-            p.getInventory().addItem(new ItemStack(Material.STONE_AXE));
+                // Passing Variable
+                BukkitTask leatherTask = new LeatherTask(player).runTask(testPlugin);
 
-                // Giving Redstone
-                ItemStack blood = new ItemStack(Material.REDSTONE,1);
-                ItemMeta bloodmeta = (ItemMeta)blood.getItemMeta();
+                // Giving Items
+                player.getInventory().addItem(new ItemStack(Material.STONE_AXE));
 
-                ArrayList<String> redLore = new ArrayList<String>();
+                // Giving Redstone (Rage Mechanic)
+                ItemStack rage = new ItemStack(Material.REDSTONE,1);
+                ItemMeta ragemeta = (ItemMeta)rage.getItemMeta();
+
+                ArrayList<String> redLore = new ArrayList<String>(); // Organize lore lines
                 redLore.add("Collect 2 and Click to activate RAGE!");
                 redLore.add("4 for SUPER RAGE! 6 for ULTRA RAGE");
-                bloodmeta.setLore(redLore);
-                bloodmeta.setDisplayName("Essence Of Rage");
-                blood.setItemMeta(bloodmeta);
+                ragemeta.setLore(redLore);
 
+                // Display
+                ragemeta.setDisplayName("Essence Of Rage");
+                rage.setItemMeta(ragemeta);
 
-//            // Giving Redstone
-//                ItemStack blood = new ItemStack(Material.REDSTONE,1);
-//                ItemMeta bloodmeta = (ItemMeta)blood.getItemMeta();
-//                bloodmeta.setDisplayName("Essence Of Rage");
-//                bloodmeta.setLore(Collections.singletonList("Collect 2 and Click to activate RAGE!\n4 for Super Rage! 6 for ULTRA RAGE"));
-//                blood.setItemMeta(bloodmeta);
-
-            // Giving Potions
-                p.getInventory().addItem(blood);
+                // Giving Potions
+                player.getInventory().addItem(rage);
 
             } else {
 
-                p.sendMessage(ChatColor.RED + "You do not have permission to do that - Rapid");
+                // If the Sender is not a player
+                player.sendMessage(ChatColor.RED + "You have not discovered this Rapid69 Technology.");
 
             }
 
         }
-        return true;
+        return true; // Always end
     }
 }

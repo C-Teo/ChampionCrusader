@@ -12,97 +12,104 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.*;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Iterator;
+
 
 public class MageCommand implements CommandExecutor {
 
     private final ChampionCrusader testPlugin;
-
-    public MageCommand(ChampionCrusader testPlugin) {
-        this.testPlugin = testPlugin;
-    }
+    public MageCommand(ChampionCrusader testPlugin) { this.testPlugin = testPlugin; }
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender instanceof Player){
+        if (sender instanceof Player){ // If commander user is player
 
-            Player p = (Player) sender;
+            Player player = (Player) sender; // Player variable
 
-            if (p.hasPermission("champions.select")) {
+            if (player.hasPermission("champions.select")) { // Check for permission
 
                 // Resetting Character and Inventory
-                p.setHealth(20);
-                p.getInventory().clear();
-                p.getEquipment().clear();
-                for (PotionEffect effect : p.getActivePotionEffects())
-                    p.removePotionEffect(effect.getType());
+                player.setHealth(20);
+                player.getInventory().clear();
+                player.getEquipment().clear();
 
-                p.getEquipment().setHelmet(null);
-                p.getEquipment().setChestplate(null);
-                p.getEquipment().setLeggings(null);
-                p.getEquipment().setBoots(null);
+                // Reset each potion effect on player
+                for (PotionEffect effect : player.getActivePotionEffects()) { player.removePotionEffect(effect.getType()); }
 
+                // Set player equipped armor empty
+                player.getEquipment().setHelmet(null);
+                player.getEquipment().setChestplate(null);
+                player.getEquipment().setLeggings(null);
+                player.getEquipment().setBoots(null);
 
                 // Giving and Removing Tags
-                p.getScoreboardTags().add("mage");
-                p.getScoreboardTags().remove("berserker");
-                p.getScoreboardTags().remove("paladin");
-                p.getScoreboardTags().remove("ranger");
+                player.getScoreboardTags().add("mage");
+                player.getScoreboardTags().remove("berserker");
+                player.getScoreboardTags().remove("paladin");
+                player.getScoreboardTags().remove("ranger");
 
-                // UI
-                p.sendMessage(ChatColor.GREEN + "You have picked" + ChatColor.LIGHT_PURPLE + " Mage");
-                p.sendTitle(ChatColor.GREEN + "You have picked" + ChatColor.LIGHT_PURPLE + " Mage","Good Luck",1,50,1);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
-
-                p.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "The Mage uses splash potions on their target. They have Regen, Instant Health, Poison, and Harming potions. Unlimited uses but on a 10 second cooldown for each potion!");
+                // Graphical User Interface
+                player.sendMessage(ChatColor.GREEN + "You have picked" + ChatColor.LIGHT_PURPLE + " Mage");
+                player.sendTitle(ChatColor.GREEN + "You have picked" + ChatColor.LIGHT_PURPLE + " Mage",
+                        "Good Luck",1,50,1);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
+                player.sendMessage(ChatColor.GRAY + "The Mage uses splash potions on their target. " +
+                        "They have Regen, Instant Health, Poison, and Harming potions. Unlimited uses but on a 10 second " +
+                        "cooldown for each potion!");
 
 
                 // Passing Variable
-                BukkitTask leatherTask = new LeatherTask(p).runTask(testPlugin);
+                BukkitTask leatherTask = new LeatherTask(player).runTask(testPlugin);
 
                 // Giving Items
-
-                p.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
+                player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
 
                 // Creating Potions
-                    // Regen Potions
+
+                // Regen Potions
                 ItemStack regen = new ItemStack(Material.SPLASH_POTION);
                 PotionMeta regenmeta = (PotionMeta) regen.getItemMeta();
-                regenmeta.setDisplayName("Splash Potion of Regeneration");
+                regenmeta.setDisplayName(ChatColor.RESET + "Potion of" + ChatColor.LIGHT_PURPLE + " Regeneration");
                 regenmeta.setColor(Color.PURPLE);
                 regenmeta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 300, 0), true);
                 regen.setItemMeta(regenmeta);
-                    // Instant Health Potions
+
+                // Instant Health Potions
                 ItemStack health = new ItemStack(Material.SPLASH_POTION);
                 PotionMeta healthmeta = (PotionMeta) health.getItemMeta();
-                healthmeta.setDisplayName("Splash Potion of Instant Healing");
+                healthmeta.setDisplayName(ChatColor.RESET + "Potion of" + ChatColor.RED + " Health");
                 healthmeta.setColor(Color.RED);
                 healthmeta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 20, 1), true);
                 health.setItemMeta(healthmeta);
-                    // Poison Potions
+
+                // Poison Potions
                 ItemStack poison = new ItemStack(Material.SPLASH_POTION);
                 PotionMeta poisonmeta = (PotionMeta) poison.getItemMeta();
-                poisonmeta.setDisplayName("Splash Potion of Poison");
+                poisonmeta.setDisplayName(ChatColor.RESET + "Potion of" + ChatColor.GREEN + " Poison");
                 poisonmeta.setColor(Color.GREEN);
                 poisonmeta.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 200, 0), true);
                 poison.setItemMeta(poisonmeta);
-                    // Harming Potions
+
+                // Harming Potions
                 ItemStack harm = new ItemStack(Material.SPLASH_POTION);
                 PotionMeta harmmeta = (PotionMeta) harm.getItemMeta();
-                harmmeta.setDisplayName("Splash Potion of Harming");
+                harmmeta.setDisplayName(ChatColor.RESET + "Potion of" + ChatColor.DARK_PURPLE + " Harming");
                 harmmeta.setColor(Color.BLACK);
                 harmmeta.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 20, 1), true);
                 harm.setItemMeta(harmmeta);
 
                 // Giving Players the Potions
-                p.getInventory().addItem(new ItemStack(regen));
-                p.getInventory().addItem(new ItemStack(health));
-                p.getInventory().addItem(new ItemStack(poison));
-                p.getInventory().addItem(new ItemStack(harm));
+                player.getInventory().addItem(new ItemStack(regen));
+                player.getInventory().addItem(new ItemStack(health));
+                player.getInventory().addItem(new ItemStack(poison));
+                player.getInventory().addItem(new ItemStack(harm));
+
             } else {
 
-                p.sendMessage(ChatColor.RED + "You do not have permission to do that - Rapid");
+                // If the player does not have permission
+                player.sendMessage(ChatColor.RED + "You have not discovered this Rapid69 Technology.");
 
             }
 

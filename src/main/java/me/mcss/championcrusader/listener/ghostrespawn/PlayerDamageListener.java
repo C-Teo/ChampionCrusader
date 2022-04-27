@@ -4,6 +4,7 @@ import me.mcss.championcrusader.task.ghostrespawn.*;
 import me.mcss.championcrusader.ChampionCrusader;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -70,9 +71,28 @@ public class PlayerDamageListener implements Listener { // When player gets dama
                         event.setCancelled(true);
                         BukkitTask respawnTask = new RespawnTask(this.plugin, player, null).runTask(this.plugin);
                     }
+                } else if (event.getDamager() instanceof ThrownPotion) {
+                    // Save the potion by casting
+                    ThrownPotion potion = (ThrownPotion) event.getDamager();
+
+                    if (potion.getShooter() instanceof Player) {
+
+                        // Save player killer
+                        playerKiller = (Player) potion.getShooter();
+
+                        // Cancel event and run respawn mechanic task
+                        event.setCancelled(true);
+                        BukkitTask respawnTask = new RespawnTask(this.plugin, player, playerKiller).runTask(this.plugin);
+
+                    // Player was hit by another entities potion
+                    } else {
+
+                        // Still cancel event and run respawn mechanic task -> (SEE: null input for playerKiller)
+                        event.setCancelled(true);
+                        BukkitTask respawnTask = new RespawnTask(this.plugin, player, null).runTask(this.plugin);
+                    }
                 // The player was killed by a mob or other entity
                 } else {
-
                     // Still cancel event and run respawn mechanic task -> (SEE: null input for playerKiller)
                     event.setCancelled(true);
                     BukkitTask respawnTask = new RespawnTask(this.plugin, player, null).runTask(this.plugin);
