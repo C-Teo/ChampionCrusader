@@ -1,0 +1,20 @@
+name: ChampionCrusader
+version: '${project.version}'
+main: me.mcss.championcrusader.ChampionCrusader
+api-version: 1.16
+authors: [ Itzahria, Rapid64, Guidance , JupiterInMay ]
+description: The complete plugin for Champion Crusader, other code may be found in the server data packs.
+website: https://twitter.com/mcsstwt
+commands:
+  berserker:
+    description: Selects the Berserker Champion
+    usage: /<command>
+  paladin:
+    description: Selects the Paladin Champion
+    usage: /<command>
+  mage:
+    description: Selects the Mage Champion
+    usage: /<command>
+  ranger:
+    description: Selects the Ranger Champion
+    usage: /<command>
