@@ -7,7 +7,9 @@ import me.mcss.championcrusader.command.teams.teamCommand;
 import me.mcss.championcrusader.listener.classes.*;
 
 // Ghost Spawn Imports
+import me.mcss.championcrusader.listener.mobkills.EntityHealListener;
 import me.mcss.championcrusader.listener.mobkills.EntityKillListener;
+import me.mcss.championcrusader.listener.mobkills.PotionEffectListener;
 import me.mcss.championcrusader.listener.respawn.*;
 
 // Item Reload imports
@@ -59,6 +61,8 @@ public final class ChampionCrusader extends JavaPlugin {
         players rewards for killing them
          */
         getServer().getPluginManager().registerEvents(new EntityKillListener(),this);
+        getServer().getPluginManager().registerEvents(new PotionEffectListener(),this);
+        getServer().getPluginManager().registerEvents(new EntityHealListener(),this);
 
         // -= CLASS X =-
         /*

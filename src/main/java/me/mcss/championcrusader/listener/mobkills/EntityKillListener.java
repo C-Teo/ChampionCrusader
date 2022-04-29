@@ -57,74 +57,82 @@ public class EntityKillListener implements Listener {
                         // Healing the killer
                         playerKiller.addPotionEffect((new PotionEffect(PotionEffectType.HEAL,
                                 1, 1)));
-                            }
-                        // Checks if the killer is a potion
+                    }
+                    // Checks if the killer is a potion
                 } else if (event.getDamager() instanceof ThrownPotion) {
 
-                        // Saves the potion
-                        ThrownPotion potion = (ThrownPotion) event.getDamager();
+                    // Saves the potion
+                    ThrownPotion potion = (ThrownPotion) event.getDamager();
 
-                        // If the shooter is a player
-                        if (potion.getShooter() instanceof Player) {
+                    // If the shooter is a player
+                    if (potion.getShooter() instanceof Player) {
 
-                            // Saves the player as playerkiller
-                            Player playerKiller = (Player) potion.getShooter();
+                        // Saves the player as playerkiller
+                        Player playerKiller = (Player) potion.getShooter();
 
-                            // Graphical User Interface
-                            playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" +
-                                    ChatColor.GRAY + "] " + ChatColor.BLUE
-                                    + "You killed a Mob! Have some heals!");
-                            playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
+                        // Graphical User Interface
+                        playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" +
+                                ChatColor.GRAY + "] " + ChatColor.BLUE
+                                + "You killed a Mob! Have some heals!");
+                        playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
 
-                            // Healing the killer
-                            playerKiller.addPotionEffect((new PotionEffect(PotionEffectType.HEAL,
-                                    1, 1)));
-                        }
+                        // Healing the killer
+                        playerKiller.addPotionEffect((new PotionEffect(PotionEffectType.HEAL,
+                                1, 1)));
                     }
                 }
             }
+        }
 
         // Checks if entity is an Iron Golem
         if (event.getEntity() instanceof IronGolem) {
-            // Saves player
-            Player player = (Player) event.getDamager();
 
-            // Checks what Iron Golem it is
-            if (event.getEntity().getName().contains("RED BUCKET")) {
-                // Checks what team tag the player has
-                if (player.getScoreboardTags().contains("RED")) {
-                    // Cancels the damage if they are the same
-                    event.setCancelled(true);
+            if (event.getDamager() instanceof Player) {
+                // Saves player
+                Player player = (Player) event.getDamager();
+
+                // Checks what Iron Golem it is
+                if (event.getEntity().getName().contains("RED BUCKET")) {
+                    // Checks what team tag the player has
+                    if (player.getScoreboardTags().contains("RED")) {
+                        // Cancels the damage if they are the same
+                        event.setCancelled(true);
+                    }
+                    // Repeats for all the other teams
+                } else if (event.getEntity().getName().contains("ORANGE BUCKET")) {
+                    if (player.getScoreboardTags().contains("YELLOW")) {
+                        event.setCancelled(true);
+                    }
+                } else if (event.getEntity().getName().contains("YELLOW BUCKET")) {
+                    if (player.getScoreboardTags().contains("YELLOW")) {
+                        event.setCancelled(true);
+                    }
+                } else if (event.getEntity().getName().contains("GREEN BUCKET")) {
+                    if (player.getScoreboardTags().contains("GREEN")) {
+                        event.setCancelled(true);
+                    }
+                } else if (event.getEntity().getName().contains("CYAN BUCKET")) {
+                    if (player.getScoreboardTags().contains("CYAN")) {
+                        event.setCancelled(true);
+                    }
+                } else if (event.getEntity().getName().contains("BLUE BUCKET")) {
+                    if (player.getScoreboardTags().contains("BLUE")) {
+                        event.setCancelled(true);
+                    }
+                } else if (event.getEntity().getName().contains("PURPLE BUCKET")) {
+                    if (player.getScoreboardTags().contains("PURPLE")) {
+                        event.setCancelled(true);
+                    }
+                } else if (event.getEntity().getName().contains("PINK BUCKET")) {
+                    if (player.getScoreboardTags().contains("PINK")) {
+                        event.setCancelled(true);
+                    }
+
                 }
-                // Repeats for all the other teams
-            } else if (event.getEntity().getName().contains("ORANGE BUCKET")) {
-                if (player.getScoreboardTags().contains("YELLOW")) {
-                    event.setCancelled(true);
-                }
-            } else if (event.getEntity().getName().contains("YELLOW BUCKET")) {
-                if (player.getScoreboardTags().contains("YELLOW")) {
-                    event.setCancelled(true);
-                }
-            } else if (event.getEntity().getName().contains("GREEN BUCKET")) {
-                if (player.getScoreboardTags().contains("GREEN")) {
-                    event.setCancelled(true);
-                }
-            } else if (event.getEntity().getName().contains("CYAN BUCKET")) {
-                if (player.getScoreboardTags().contains("CYAN")) {
-                    event.setCancelled(true);
-                }
-            } else if (event.getEntity().getName().contains("BLUE BUCKET")) {
-                if (player.getScoreboardTags().contains("BLUE")) {
-                    event.setCancelled(true);
-                }
-            } else if (event.getEntity().getName().contains("PURPLE BUCKET")) {
-                if (player.getScoreboardTags().contains("PURPLE")) {
-                    event.setCancelled(true);
-                }
-            } else if (event.getEntity().getName().contains("PINK BUCKET")) {
-                if (player.getScoreboardTags().contains("PINK")) {
-                    event.setCancelled(true);
-                }
+            } else {
+
+                event.setCancelled(true);
+
             }
         }
     }
