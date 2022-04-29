@@ -63,7 +63,7 @@ public final class ChampionCrusader extends JavaPlugin {
         // -= CLASS X =-
         /*
         Handles all class selection commands and
-        utility.
+        utility. poop
          */
 
         // Listeners
