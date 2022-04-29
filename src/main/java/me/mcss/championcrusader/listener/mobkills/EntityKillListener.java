@@ -1,6 +1,5 @@
 package me.mcss.championcrusader.listener.mobkills;
 
-import me.mcss.championcrusader.listener.itemreload.PotionSplash;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
