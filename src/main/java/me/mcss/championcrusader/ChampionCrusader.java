@@ -1,24 +1,30 @@
 package me.mcss.championcrusader; // Main package
 
 // ClassX Imports
-import me.mcss.championcrusader.command.classx.*;
-import me.mcss.championcrusader.listener.classx.*;
+import me.mcss.championcrusader.command.classes.*;
+import me.mcss.championcrusader.command.teams.showTeamsCommand;
+import me.mcss.championcrusader.command.teams.teamCommand;
+import me.mcss.championcrusader.listener.classes.*;
 
 // Ghost Spawn Imports
-import me.mcss.championcrusader.listener.ghostrespawn.*;
+import me.mcss.championcrusader.listener.respawn.*;
 
 // Item Reload imports
-import me.mcss.championcrusader.listener.itemreload.*;
+import me.mcss.championcrusader.listener.cooldown.*;
 
 // Plentiful Arrow Imports
-import me.mcss.championcrusader.listener.plentifularrow.*;
+import me.mcss.championcrusader.listener.arrowAbility.*;
 
 // Java Plugin Import
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
+// Other Imports
+import java.util.HashMap;
 
 public final class ChampionCrusader extends JavaPlugin {
+
+    public HashMap<String, String> playerToTeam = new HashMap<>();
+    public HashMap<String, String> playerToClass = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -58,10 +64,12 @@ public final class ChampionCrusader extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RageListener(),this);
 
         // Commands
-        getCommand("berserker").setExecutor(new BerserkerCommand(this));
-        getCommand("paladin").setExecutor(new PaladinCommand(this));
-        getCommand("mage").setExecutor(new MageCommand(this));
-        getCommand("ranger").setExecutor(new RangerCommand(this));
+        getCommand("berserker").setExecutor(new BerserkerCommand(this,playerToTeam,playerToClass));
+        getCommand("paladin").setExecutor(new PaladinCommand(this,playerToTeam,playerToClass));
+        getCommand("mage").setExecutor(new MageCommand(this,playerToTeam,playerToClass));
+        getCommand("ranger").setExecutor(new RangerCommand(this,playerToTeam,playerToClass));
+        getCommand("cc").setExecutor(new teamCommand(playerToTeam));
+        getCommand("teams").setExecutor(new showTeamsCommand(playerToTeam,playerToClass));
     }
 
     @Override

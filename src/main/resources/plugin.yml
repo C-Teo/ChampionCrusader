@@ -7,14 +7,20 @@ description: The complete plugin for Champion Crusader, other code may be found 
 website: https://twitter.com/mcsstwt
 commands:
   berserker:
-    description: Selects the Berserker Champion
+    description: Set the subclass of the player to [BERSERKER]
     usage: /<command>
   paladin:
-    description: Selects the Paladin Champion
+    description: Set the subclass of the player to [PALADIN]
     usage: /<command>
   mage:
-    description: Selects the Mage Champion
+    description: Set the subclass of the player to [MAGE]
     usage: /<command>
   ranger:
-    description: Selects the Ranger Champion
+    description: Set the subclass of the player to [RANGER]
+    usage: /<command>
+  cc:
+    description: Use setteam [Player] [Team Color] to set a players Champion Crusader team
+    usage: /<command>
+  teams:
+    description: Show all the current registered players with their TEAM and if chosen CLASS
     usage: /<command>

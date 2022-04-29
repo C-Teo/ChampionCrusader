@@ -13,11 +13,11 @@ FIGHTER
 HUNTER
 - Ranger            ( Infinite arrows as long as you hit your shot )            ( MEDIUM )
 - Assassin          ( Invisibility with a semi-back stab mechanic )             ( MEDIUM )
-- Artillery         ( Short Range Crossbow burst )                              ( EASY )
+- Scout		    ( Mark a target for death )  	                        ( HARD )
 - Trickster         ( Super fast knock back based character )                   ( HARD )
 
 MAGE
 - Witch             ( Potions of all sorts on cool down )                       ( EASY )
 - Wizard            ( Spells of all sorts on cool down )                        ( HARD )
-- Enhancer          ( Consume items in your inventory to enchant weapon )       ( MEDIUM )
+- Enhancer          ( Buff team for a short amount of time )       		( MEDIUM )
 - Healer            ( Healing Spell )                                           ( EASY )
