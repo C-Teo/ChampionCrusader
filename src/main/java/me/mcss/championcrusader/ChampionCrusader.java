@@ -7,6 +7,7 @@ import me.mcss.championcrusader.command.teams.teamCommand;
 import me.mcss.championcrusader.listener.classes.*;
 
 // Ghost Spawn Imports
+import me.mcss.championcrusader.listener.mobkills.EntityKillListener;
 import me.mcss.championcrusader.listener.respawn.*;
 
 // Item Reload imports
@@ -51,6 +52,13 @@ public final class ChampionCrusader extends JavaPlugin {
         check to allow for multiple cool downs.
          */
         getServer().getPluginManager().registerEvents(new PotionSplashListener(this),this);
+
+        // -= MOB KILLER =-
+        /*
+        Checks the mobs that are killed and gives the
+        players rewards for killing them
+         */
+        getServer().getPluginManager().registerEvents(new EntityKillListener(),this);
 
         // -= CLASS X =-
         /*
