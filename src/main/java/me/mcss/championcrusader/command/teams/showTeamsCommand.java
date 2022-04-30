@@ -30,13 +30,14 @@ public class showTeamsCommand implements CommandExecutor {
                     + ChatColor.WHITE + " Registered Players " + ChatColor.GRAY + "]}>=-");
             user.sendMessage(ChatColor.GOLD + "========================================");
 
+            // Print every player with their team and class if they have a class
             for (String player : playerToTeam.keySet()) {
                 if (playerToClass.containsKey(player)) {
                     user.sendMessage("N: " + player + ChatColor.GREEN + " >>" + ChatColor.WHITE + " T: "
                             + playerToTeam.get(player) + ChatColor.GREEN + " >>" + ChatColor.WHITE
                             + " C: " + playerToClass.get(player));
                 } else {
-                    user.sendMessage(player + " >> " + playerToTeam.get(player));
+                    user.sendMessage(player + ChatColor.GREEN + " >> " + ChatColor.WHITE + playerToTeam.get(player));
                 }
             }
             user.sendMessage(ChatColor.GOLD + "========================================");

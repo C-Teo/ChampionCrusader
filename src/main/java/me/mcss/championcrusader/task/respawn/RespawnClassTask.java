@@ -1,5 +1,7 @@
 package me.mcss.championcrusader.task.respawn;
 
+import me.mcss.championcrusader.ChampionCrusader;
+import me.mcss.championcrusader.task.classx.LeatherTask;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,15 +10,18 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 
 public class RespawnClassTask extends BukkitRunnable {
 
     private Player player;
+    private final ChampionCrusader plugin;
 
-    public RespawnClassTask(Player player) {
+    public RespawnClassTask(Player player, ChampionCrusader plugin) {
         this.player = player;
+        this.plugin = plugin;
     }
 
     @Override
@@ -49,6 +54,9 @@ public class RespawnClassTask extends BukkitRunnable {
             player.getInventory().addItem(new ItemStack(slowness));
             player.getInventory().addItem(new ItemStack(weakness));
 
+            // Leather Task
+            BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
+
         } else if (player.getScoreboardTags().contains("berserker")) {
 
             player.getInventory().clear();
@@ -70,6 +78,10 @@ public class RespawnClassTask extends BukkitRunnable {
 
             // Giving Potions
             player.getInventory().addItem(rage);
+
+            // Leather Task
+            BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
+
         }
     }
 }

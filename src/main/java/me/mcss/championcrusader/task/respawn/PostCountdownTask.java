@@ -82,7 +82,7 @@ public class PostCountdownTask extends BukkitRunnable {
         player.setHealth(20d); // Reset health
         player.sendTitle(ChatColor.AQUA + "GO!",null,0,20,0); // Send display message
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME,1.0f,1.0f); // Play sound
-        BukkitTask respawnClassTask = new RespawnClassTask(player).runTask(plugin);
+        BukkitTask respawnClassTask = new RespawnClassTask(player,plugin).runTask(plugin);
     }
 }
 

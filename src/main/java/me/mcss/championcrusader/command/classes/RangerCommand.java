@@ -56,8 +56,23 @@ public class RangerCommand implements CommandExecutor {
                             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
                                     + "] " + ChatColor.DARK_RED + "Someone in your team is already this class!");
 
+                            player.getInventory().clear();
                             return true;
                         }
+                    }
+
+                    // Unselect the class if the player is already a part of it
+                    if (playerToClass.containsKey(player.getName())
+                            && playerToClass.get(player.getName()).equalsIgnoreCase("ranger")) {
+
+                        // Remove from Map and send message
+                        playerToClass.remove(player.getName());
+
+                        player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                + "] " + ChatColor.GRAY + "You have unselected this class!");
+
+                        player.getInventory().clear();
+                        return true;
                     }
 
                     // Resetting Character and Inventory

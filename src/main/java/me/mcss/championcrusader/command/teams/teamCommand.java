@@ -12,10 +12,12 @@ import java.util.HashMap;
 public class teamCommand implements CommandExecutor {
 
     private final HashMap<String,String> playerToTeam; // Variable
+    private final HashMap<String,String> playerToClass;
 
     // Pass the Map of all players and their Team Color
-    public teamCommand(HashMap<String,String> playerToTeam) {
+    public teamCommand(HashMap<String,String> playerToTeam, HashMap<String,String> playerToClass) {
         this.playerToTeam = playerToTeam;
+        this.playerToClass = playerToClass;
     }
 
     @Override
@@ -68,7 +70,11 @@ public class teamCommand implements CommandExecutor {
 
                             } else if (args[2].equalsIgnoreCase("cyan")) {
 
-                                setTeam("CYAN",player,target);
+                                setTeam("CYAN", player, target);
+
+                            } else if (args[2].equalsIgnoreCase("staff")) {
+
+                                setTeam("STAFF",player,target);
 
                             // If the team color provided does not exist
                             } else {
@@ -124,17 +130,37 @@ public class teamCommand implements CommandExecutor {
         target.getScoreboardTags().add(team);
 
         // Set the player to the LP role
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "lp user " + target.getName() + " parent set " + team.toLowerCase() + "-team");
+        if (team.equalsIgnoreCase("STAFF")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                    "lp user " + target.getName() + " parent set " + team.toLowerCase());
 
-        playerToTeam.put(target.getName(),team); // Put them into the Map
+            // Send a message to both the sender
+            sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                    + "] " + ChatColor.WHITE + "The player " + target.getName()
+                    + " has their team set to " + team);
 
-        // Send a message to both the sender and the target
-        sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                + "] " + ChatColor.WHITE + "The player " + target.getName()
-                + " has their team set to " + team);
+            // Remove staff member from all the maps
+            if (playerToTeam.containsKey(target.getName())) {
+                playerToTeam.remove(target.getName());
+            }
 
-        target.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                + "] " + ChatColor.WHITE + "Your team is now " + team);
+            if (playerToClass.containsKey(target.getName())) {
+                playerToClass.remove(target.getName());
+            }
+
+        } else {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                    "lp user " + target.getName() + " parent set " + team.toLowerCase() + "-team");
+
+            playerToTeam.put(target.getName(), team); // Put them into the Map
+
+            // Send a message to both the sender and the target
+            sender.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                    + "] " + ChatColor.WHITE + "The player " + target.getName()
+                    + " has their team set to " + team);
+
+            target.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                    + "] " + ChatColor.WHITE + "Your team is now " + team);
+        }
     }
 }
