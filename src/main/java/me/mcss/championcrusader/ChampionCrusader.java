@@ -41,6 +41,9 @@ public final class ChampionCrusader extends JavaPlugin {
         teamReady.put("CYAN",false);
         teamReady.put("ORANGE",false);
 
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
         // -= PLENTIFUL ARROW =-
         /*
         Return the arrow shot to the player

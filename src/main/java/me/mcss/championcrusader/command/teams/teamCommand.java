@@ -232,7 +232,7 @@ public class teamCommand implements CommandExecutor {
      @param target This is the person who is being targeted
      */
     public void setTeam(String team, Player sender, Player target) {
-
+        
         // Set player's tag
         target.getScoreboardTags().clear();
         target.getScoreboardTags().add(team);
@@ -272,7 +272,7 @@ public class teamCommand implements CommandExecutor {
         }
     }
 
-    public String getTeam(Player player) {
+    public static String getTeam(Player player) {
         if (player.getScoreboardTags().contains("RED")) {
             return "RED";
         } else if (player.getScoreboardTags().contains("BLUE")) {

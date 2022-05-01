@@ -1,5 +1,5 @@
 package me.mcss.championcrusader.task.respawn;
-
+import me.mcss.championcrusader.command.teams.teamCommand;
 import me.mcss.championcrusader.ChampionCrusader;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -30,52 +30,39 @@ public class PostCountdownTask extends BukkitRunnable {
         // Set user to adventure mode
         player.setGameMode(GameMode.ADVENTURE);
 
-        Location location; // Will be used in a bit
+        Location location = null; // Will be used in a bit
+        final int DISPLACEMENT = 102;
+        final int HEIGHT = 9;
 
         // Check which tag the user has for team spawn
         // Location cords for team is got from the config
-        if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_ONE_FIRST"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_ONE_FIRST_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_ONE_FIRST_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_ONE_FIRST_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_ONE_SECOND"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_ONE_SECOND_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_ONE_SECOND_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_ONE_SECOND_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_TWO_FIRST"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_TWO_FIRST_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_TWO_FIRST_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_TWO_FIRST_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_TWO_SECOND"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_TWO_SECOND_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_TWO_SECOND_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_TWO_SECOND_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_THREE_FIRST"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_THREE_FIRST_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_THREE_FIRST_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_THREE_FIRST_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_THREE_SECOND"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_THREE_SECOND_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_THREE_SECOND_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_THREE_SECOND_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_FOUR_FIRST"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_FOUR_FIRST_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_FOUR_FIRST_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_FOUR_FIRST_LOC").get(2));
-        } else if (player.getScoreboardTags().contains(plugin.getConfig().getString("MAP_FOUR_SECOND"))) {
-            location = new Location(player.getWorld(),
-                    plugin.getConfig().getIntegerList("MAP_FOUR_SECOND_LOC").get(0),
-                    plugin.getConfig().getIntegerList("MAP_FOUR_SECOND_LOC").get(1),
-                    plugin.getConfig().getIntegerList("MAP_FOUR_SECOND_LOC").get(2));
-        } else { // If the user has no tag respawn them to spawn
-            location = new Location(player.getWorld(),0,0,0);
+        String team = teamCommand.getTeam(player);
+
+        if (team != null) { // Check if we found a team
+            // Get the arena and side linked
+            int arena = plugin.getConfig().getIntegerList(team).get(0);
+            int side = plugin.getConfig().getIntegerList(team).get(1);
+
+            // If they are on the first side
+            if (side == 1) {
+
+                location = new Location(player.getWorld(),
+                        plugin.getConfig().getIntegerList("" + arena).get(0),
+                        plugin.getConfig().getIntegerList("" + arena).get(1) + HEIGHT,
+                        plugin.getConfig().getIntegerList("" + arena).get(2) + DISPLACEMENT);
+                location.setYaw(180f);
+
+            // If they are on the second side
+            } else if (side == 2) {
+
+                location = new Location(player.getWorld(),
+                        plugin.getConfig().getIntegerList("" + arena).get(0),
+                        plugin.getConfig().getIntegerList("" + arena).get(1) + HEIGHT,
+                        plugin.getConfig().getIntegerList("" + arena).get(2) - DISPLACEMENT);
+            }
+        } else {
+            // Hub Spawn location
+            location = new Location(player.getWorld(),-530,115,448);
         }
 
         player.teleport(location); // Teleport

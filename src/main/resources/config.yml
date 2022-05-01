@@ -1,59 +1,51 @@
-
-# TESTING DO NOT TOUCH
-test:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
-
 # GHOST RESPAWN CONFIG
 # Should not be touched manually, use
 # commands through ChampionCrusader
 
-MAP_ONE_FIRST: "RED"
-MAP_ONE_FIRST_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
+RED:
+  - 1
+  - 1
+BLUE:
+  - 1
+  - 2
+GREEN:
+  - 2
+  - 1
+YELLOW:
+  - 2
+  - 2
+PURPLE:
+  - 3
+  - 1
+PINK:
+  - 3
+  - 2
+ORANGE:
+  - 4
+  - 1
+CYAN:
+  - 4
+  - 2
 
-MAP_ONE_SECOND: "BLUE"
-MAP_ONE_SECOND_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
+# X
+# Y
+# Z
+1:
+  - -563
+  - 105
+  - 11
 
-MAP_TWO_FIRST: "GREEN"
-MAP_TWO_FIRST_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
+2:
+  - -886
+  - 107
+  - 11
 
-MAP_TWO_SECOND: "YELLOW"
-MAP_TWO_SECOND_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
+3:
+  - -1202
+  - 109
+  - 11
 
-MAP_THREE_FIRST: "PURPLE"
-MAP_THREE_FIRST_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
-
-MAP_THREE_SECOND: "PINK"
-MAP_THREE_SECOND_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
-
-MAP_FOUR_FIRST: "ORANGE"
-MAP_FOUR_FIRST_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
-
-MAP_FOUR_SECOND: "CYAN"
-MAP_FOUR_SECOND_LOC:
-  - -261 # X
-  - 89   # Y
-  - 250  # Z
-
+4:
+  - -1537
+  - 111
+  - 11
