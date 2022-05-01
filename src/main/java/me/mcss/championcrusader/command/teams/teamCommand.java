@@ -139,6 +139,10 @@ public class teamCommand implements CommandExecutor {
                                     + "] " + ChatColor.DARK_RED + "Your whole team has not picked a class!");
                         }
 
+                    } else if (args[0].equalsIgnoreCase("tutorial") && args.length == 1) {
+
+                    } else if (args[0].equalsIgnoreCase("linkteam") && args.length == 3) {
+
                     } else if (args[0].equalsIgnoreCase("status") && args.length == 1) {
 
                         // Send the Header

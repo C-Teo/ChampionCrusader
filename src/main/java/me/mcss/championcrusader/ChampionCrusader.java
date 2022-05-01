@@ -2,7 +2,6 @@ package me.mcss.championcrusader; // Main package
 
 // ClassX Imports
 import me.mcss.championcrusader.command.classes.*;
-import me.mcss.championcrusader.command.teams.showTeamsCommand;
 import me.mcss.championcrusader.command.teams.teamCommand;
 import me.mcss.championcrusader.listener.classes.*;
 
@@ -23,7 +22,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 // Other Imports
 import java.util.HashMap;
-import java.util.Map;
 
 public final class ChampionCrusader extends JavaPlugin {
 
@@ -91,7 +89,6 @@ public final class ChampionCrusader extends JavaPlugin {
         getCommand("mage").setExecutor(new MageCommand(this,playerToTeam,playerToClass));
         getCommand("ranger").setExecutor(new RangerCommand(this,playerToTeam,playerToClass));
         getCommand("cc").setExecutor(new teamCommand(playerToTeam,playerToClass,teamReady));
-        getCommand("teams").setExecutor(new showTeamsCommand(playerToTeam,playerToClass));
     }
 
     @Override
