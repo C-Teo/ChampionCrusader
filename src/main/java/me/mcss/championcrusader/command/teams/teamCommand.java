@@ -1,27 +1,33 @@
 package me.mcss.championcrusader.command.teams;
 
 // Imports
+import me.mcss.championcrusader.ChampionCrusader;
+import me.mcss.championcrusader.task.tutorial.tutorialTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class teamCommand implements CommandExecutor {
 
+    ChampionCrusader plugin;
     private final HashMap<String,String> playerToTeam; // Variable
     private final HashMap<String,String> playerToClass;
     private final HashMap<String, Boolean> teamReady;
 
     // Pass the Map of all players and their Team Color
-    public teamCommand(HashMap<String,String> playerToTeam,
+    public teamCommand(ChampionCrusader plugin, HashMap<String,String> playerToTeam,
                        HashMap<String,String> playerToClass, HashMap<String, Boolean> teamReady) {
         this.playerToTeam = playerToTeam;
         this.playerToClass = playerToClass;
         this.teamReady = teamReady;
+        this.plugin = plugin;
     }
 
     @Override
@@ -140,6 +146,13 @@ public class teamCommand implements CommandExecutor {
                         }
 
                     } else if (args[0].equalsIgnoreCase("tutorial") && args.length == 1) {
+
+                        BukkitTask msgOne = new tutorialTask(1,player).runTask(plugin);
+                        BukkitTask msgTwo = new tutorialTask(2,player).runTaskLater(plugin,80);
+                        BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,160);
+                        BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,240);
+                        BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,320);
+
 
                     } else if (args[0].equalsIgnoreCase("linkteam") && args.length == 3) {
 

@@ -1,7 +1,7 @@
 package me.mcss.championcrusader.task.respawn;
 
 import me.mcss.championcrusader.ChampionCrusader;
-import me.mcss.championcrusader.task.classx.LeatherTask;
+import me.mcss.championcrusader.task.classes.LeatherTask;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

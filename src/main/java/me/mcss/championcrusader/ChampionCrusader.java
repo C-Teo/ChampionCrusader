@@ -88,7 +88,7 @@ public final class ChampionCrusader extends JavaPlugin {
         getCommand("paladin").setExecutor(new PaladinCommand(this,playerToTeam,playerToClass));
         getCommand("mage").setExecutor(new MageCommand(this,playerToTeam,playerToClass));
         getCommand("ranger").setExecutor(new RangerCommand(this,playerToTeam,playerToClass));
-        getCommand("cc").setExecutor(new teamCommand(playerToTeam,playerToClass,teamReady));
+        getCommand("cc").setExecutor(new teamCommand(this,playerToTeam,playerToClass,teamReady));
     }
 
     @Override
