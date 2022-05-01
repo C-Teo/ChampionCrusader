@@ -23,10 +23,11 @@ public class showTeamsCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
-
+            // Cast the sender into a player
             Player user = (Player) sender;
 
-            user.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion " + ChatColor.GOLD + " Crusader "
+            // Send the Header
+            user.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
                     + ChatColor.WHITE + " Registered Players " + ChatColor.GRAY + "]}>=-");
             user.sendMessage(ChatColor.GOLD + "========================================");
 
@@ -40,6 +41,8 @@ public class showTeamsCommand implements CommandExecutor {
                     user.sendMessage(player + ChatColor.GREEN + " >> " + ChatColor.WHITE + playerToTeam.get(player));
                 }
             }
+
+            // Send the Footer
             user.sendMessage(ChatColor.GOLD + "========================================");
         } else {
 

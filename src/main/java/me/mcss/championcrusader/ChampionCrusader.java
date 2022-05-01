@@ -23,15 +23,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 // Other Imports
 import java.util.HashMap;
+import java.util.Map;
 
 public final class ChampionCrusader extends JavaPlugin {
 
     public HashMap<String, String> playerToTeam = new HashMap<>();
     public HashMap<String, String> playerToClass = new HashMap<>();
+    public HashMap<String, Boolean> teamReady = new HashMap<>();
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        teamReady.put("RED",false);
+        teamReady.put("BLUE",false);
+        teamReady.put("GREEN",false);
+        teamReady.put("YELLOW",false);
+        teamReady.put("PINK",false);
+        teamReady.put("PURPLE",false);
+        teamReady.put("CYAN",false);
+        teamReady.put("ORANGE",false);
 
         // -= PLENTIFUL ARROW =-
         /*
@@ -80,7 +90,7 @@ public final class ChampionCrusader extends JavaPlugin {
         getCommand("paladin").setExecutor(new PaladinCommand(this,playerToTeam,playerToClass));
         getCommand("mage").setExecutor(new MageCommand(this,playerToTeam,playerToClass));
         getCommand("ranger").setExecutor(new RangerCommand(this,playerToTeam,playerToClass));
-        getCommand("cc").setExecutor(new teamCommand(playerToTeam,playerToClass));
+        getCommand("cc").setExecutor(new teamCommand(playerToTeam,playerToClass,teamReady));
         getCommand("teams").setExecutor(new showTeamsCommand(playerToTeam,playerToClass));
     }
 
