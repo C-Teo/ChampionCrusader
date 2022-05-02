@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -148,13 +149,77 @@ public class teamCommand implements CommandExecutor {
                     } else if (args[0].equalsIgnoreCase("tutorial") && args.length == 1) {
 
                         BukkitTask msgOne = new tutorialTask(1,player).runTask(plugin);
-                        BukkitTask msgTwo = new tutorialTask(2,player).runTaskLater(plugin,80);
-                        BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,160);
-                        BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,240);
-                        BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,320);
+                        BukkitTask msgTwo = new tutorialTask(2,player).runTaskLater(plugin,140);
+                        BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,280);
+                        BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,420);
+                        BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,560);
 
 
-                    } else if (args[0].equalsIgnoreCase("linkteam") && args.length == 3) {
+                    } else if (args[0].equalsIgnoreCase("linkteam") && args.length == 4) {
+
+                        if (args[0].equalsIgnoreCase("linkteam")) {
+
+                            String team = args[1];
+                            team = team.toUpperCase();
+
+                            // Disgusting but effective if statement to check a proper team was passed
+                            if (team.equalsIgnoreCase("RED") || team.equalsIgnoreCase("BLUE")
+                            || team.equalsIgnoreCase("GREEN") || team.equalsIgnoreCase("YELLOW")
+                            || team.equalsIgnoreCase("PINK") || team.equalsIgnoreCase("PURPLE")
+                            || team.equalsIgnoreCase("CYAN") || team.equalsIgnoreCase("ORANGE")) {
+
+                                String arena = args[2];
+                                String side = args[3];
+
+                                if ((arena.equals("1") || arena.equals("2") || arena.equals("3") || arena.equals("4"))
+                                        && (side.equals("1") || side.equals("2"))) {
+                                    // First Index is Arena and Second Index is Side
+//                                    plugin.getConfig().getIntegerList(team).set(0,Integer.parseInt(arena));
+//                                    plugin.getConfig().getIntegerList(team).set(1,Integer.parseInt(side));
+
+                                    ArrayList<Integer> pass = new ArrayList<Integer>();
+                                    pass.add(Integer.parseInt(arena));
+                                    pass.add(Integer.parseInt(side));
+
+                                    plugin.getConfig().set(team,pass);
+
+
+                                } else {
+                                    // Invalid Arena
+                                    player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                            + "] " + ChatColor.DARK_RED + "Invalid Arena");
+
+                                }
+
+                            } else {
+                                // Invalid Team
+                                player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                        + "] " + ChatColor.DARK_RED + "Invalid Team!");
+
+                            }
+                        } else {
+                            // Improper Command
+                            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                    + "] " + ChatColor.DARK_RED + "Invalid sub-command!");
+
+                        }
+
+                    } else if (args[0].equalsIgnoreCase("links") && args.length == 1) {
+
+                        // Send the Header
+                        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
+                                + ChatColor.WHITE + " Team Ready " + ChatColor.GRAY + "]}>=-");
+                        player.sendMessage(ChatColor.GOLD + "========================================");
+
+                        // Team and Arena / Side link
+                        for (String team : teamReady.keySet()) {
+                            player.sendMessage(ChatColor.WHITE + team + ChatColor.GREEN + " >> " + ChatColor.WHITE + "Arena: "
+                                    + plugin.getConfig().getIntegerList(team).get(0) + ChatColor.GREEN + " >> " + ChatColor.WHITE +
+                                    "Side: " + plugin.getConfig().getIntegerList(team).get(1));
+                        }
+
+                        // Send the Footer
+                        player.sendMessage(ChatColor.GOLD + "========================================");
 
                     } else if (args[0].equalsIgnoreCase("status") && args.length == 1) {
 
@@ -163,6 +228,7 @@ public class teamCommand implements CommandExecutor {
                                 + ChatColor.WHITE + " Team Ready " + ChatColor.GRAY + "]}>=-");
                         player.sendMessage(ChatColor.GOLD + "========================================");
 
+                        // Team and Ready Status
                         for (String team : teamReady.keySet()) {
                             if (teamReady.get(team)) {
 
