@@ -153,6 +153,7 @@ public class teamCommand implements CommandExecutor {
                         BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,280);
                         BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,420);
                         BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,560);
+                        BukkitTask msgSix = new tutorialTask(6,player).runTaskLater(plugin,600);
 
 
                     } else if (args[0].equalsIgnoreCase("linkteam") && args.length == 4) {
@@ -223,8 +224,12 @@ public class teamCommand implements CommandExecutor {
 
                     } else if (args[0].equalsIgnoreCase("clear") && args.length == 1) {
 
-                        
-
+                        player.sendMessage(ChatColor.GREEN + "Your inventory has been cleared! Munched by Rapid");
+                        player.getEquipment().setHelmet(null);
+                        player.getEquipment().setChestplate(null);
+                        player.getEquipment().setChestplate(null);
+                        player.getEquipment().setBoots(null);
+                        player.getInventory().clear();
 
                     } else if (args[0].equalsIgnoreCase("status") && args.length == 1) {
 
