@@ -221,6 +221,11 @@ public class teamCommand implements CommandExecutor {
                         // Send the Footer
                         player.sendMessage(ChatColor.GOLD + "========================================");
 
+                    } else if (args[0].equalsIgnoreCase("clear") && args.length == 1) {
+
+                        
+
+
                     } else if (args[0].equalsIgnoreCase("status") && args.length == 1) {
 
                         // Send the Header

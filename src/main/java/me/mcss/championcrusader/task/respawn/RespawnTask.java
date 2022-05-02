@@ -46,12 +46,11 @@ public class RespawnTask extends BukkitRunnable {
 
             // Send messages to player in chat
             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY + "] "
-                    + playerKiller.getDisplayName() + " has slayed you!");
+                    + playerKiller.getDisplayName() + " has slain you!");
 
             // Send message to killer in chat
             playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                    + "]" + ChatColor.WHITE + " You have slayed " + player.getDisplayName());
-
+                    + "]" + ChatColor.WHITE + " You have slain " + player.getDisplayName());
 
             // Play sound for killer as well
             playerKiller.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1.0f, 1.0f);
