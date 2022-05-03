@@ -207,10 +207,7 @@ public class teamCommand implements CommandExecutor {
 
                     } else if (args[0].equalsIgnoreCase("links") && args.length == 1) {
 
-                        // Send the Header
-                        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
-                                + ChatColor.WHITE + " Team Ready " + ChatColor.GRAY + "]}>=-");
-                        player.sendMessage(ChatColor.GOLD + "========================================");
+                        getHeader(player);
 
                         // Team and Arena / Side link
                         for (String team : teamReady.keySet()) {
@@ -219,8 +216,7 @@ public class teamCommand implements CommandExecutor {
                                     "Side: " + plugin.getConfig().getIntegerList(team).get(1));
                         }
 
-                        // Send the Footer
-                        player.sendMessage(ChatColor.GOLD + "========================================");
+                        getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("clear") && args.length == 1) {
 
@@ -230,6 +226,17 @@ public class teamCommand implements CommandExecutor {
                         player.getEquipment().setChestplate(null);
                         player.getEquipment().setBoots(null);
                         player.getInventory().clear();
+=======
+
+>>>>>>> Stashed changes
+
+                    } else if (args[0].equalsIgnoreCase("help") && args.length == 1) {
+
+                        getHeader(player);
+
+                        player.sendMessage(ChatColor.GOLD + "/cc teams + " + ChatColor.WHITE + "Returns all players in each team");
+
+                        getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("status") && args.length == 1) {
 
@@ -251,15 +258,11 @@ public class teamCommand implements CommandExecutor {
                             }
                         }
 
-                        // Send the Footer
-                        player.sendMessage(ChatColor.GOLD + "========================================");
+                        getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("teams") && args.length == 1) {
 
-                        // Send the Header
-                        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
-                                + ChatColor.WHITE + " Registered Players " + ChatColor.GRAY + "]}>=-");
-                        player.sendMessage(ChatColor.GOLD + "========================================");
+                        getHeader(player);
 
                         // Print every player with their team and class if they have a class
                         for (String person : playerToTeam.keySet()) {
@@ -272,8 +275,7 @@ public class teamCommand implements CommandExecutor {
                             }
                         }
 
-                        // Send the Footer
-                        player.sendMessage(ChatColor.GOLD + "========================================");
+                        getFooter(player);
 
                     } else {
 
@@ -348,6 +350,11 @@ public class teamCommand implements CommandExecutor {
         }
     }
 
+    /**
+     * Given a player, return their team if they have one
+     * @param player Player to check teams
+     * @return Team or null if no Team
+     */
     public static String getTeam(Player player) {
         if (player.getScoreboardTags().contains("RED")) {
             return "RED";
@@ -367,5 +374,25 @@ public class teamCommand implements CommandExecutor {
             return "ORANGE";
         }
         return null;
+    }
+
+    /**
+     * Header for the command
+     * @param player Player that gets the message
+     */
+    public static void getHeader(Player player) {
+        // Send the Header
+        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
+                + ChatColor.WHITE + " Registered Players " + ChatColor.GRAY + "]}>=-");
+        player.sendMessage(ChatColor.GOLD + "========================================");
+    }
+
+    /**
+     * Footer for the command
+     * @param player Player that gets the message
+     */
+    public static void getFooter(Player player) {
+        // Send the Footer
+        player.sendMessage(ChatColor.GOLD + "========================================");
     }
 }
