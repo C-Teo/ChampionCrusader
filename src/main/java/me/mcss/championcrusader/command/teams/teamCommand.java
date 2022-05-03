@@ -220,6 +220,7 @@ public class teamCommand implements CommandExecutor {
 
                     } else if (args[0].equalsIgnoreCase("clear") && args.length == 1) {
 
+<<<<<<< Updated upstream
                         player.sendMessage(ChatColor.GREEN + "Your inventory has been cleared! Munched by Rapid");
                         player.getEquipment().setHelmet(null);
                         player.getEquipment().setChestplate(null);
