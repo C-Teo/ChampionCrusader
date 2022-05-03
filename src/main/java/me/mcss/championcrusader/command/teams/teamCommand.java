@@ -219,17 +219,13 @@ public class teamCommand implements CommandExecutor {
                         getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("clear") && args.length == 1) {
-
-<<<<<<< Updated upstream
+                        
                         player.sendMessage(ChatColor.GREEN + "Your inventory has been cleared! Munched by Rapid");
                         player.getEquipment().setHelmet(null);
                         player.getEquipment().setChestplate(null);
                         player.getEquipment().setChestplate(null);
                         player.getEquipment().setBoots(null);
                         player.getInventory().clear();
-=======
-
->>>>>>> Stashed changes
 
                     } else if (args[0].equalsIgnoreCase("help") && args.length == 1) {
 
