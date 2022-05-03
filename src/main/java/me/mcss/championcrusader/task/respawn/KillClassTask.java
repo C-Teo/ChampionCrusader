@@ -42,7 +42,14 @@ public class KillClassTask extends BukkitRunnable {
                     ChatColor.RED + "You have gotten some essence of rage!");
 
         } else if (player.getScoreboardTags().contains("paladin")) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,100,0));
+
+            // Heal the player
+            if (player.getHealth() + 6 > 20.0) {
+                player.setHealth(20.0);
+            } else {
+                player.setHealth(player.getHealth() + 6);
+            }
+
             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY + "] " +
                     ChatColor.GOLD + "Blessing of Paladin!");
         }

@@ -26,12 +26,10 @@ public class BerserkerCommand implements CommandExecutor {
     private HashMap<String, String> playerToClass;
 
     // Pass in Plugin, Team Map and Class Map
-    public BerserkerCommand(ChampionCrusader plugin, HashMap<String,String> playerToTeam,
-                            HashMap<String,String> playerToClass) {
+    public BerserkerCommand(ChampionCrusader plugin) {
         this.testPlugin = plugin;
-        this.playerToTeam = playerToTeam;
-        this.playerToClass = playerToClass;
-
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.playerToClass = plugin.getPlayerToClass();
     }
 
     @Override

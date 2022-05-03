@@ -23,11 +23,10 @@ public class RangerCommand implements CommandExecutor {
     private HashMap<String, String> playerToClass;
 
     // Pass in Plugin, Team Map and Class Map
-    public RangerCommand(ChampionCrusader plugin, HashMap<String,String> playerToTeam,
-                         HashMap<String,String> playerToClass) {
+    public RangerCommand(ChampionCrusader plugin) {
         this.plugin = plugin;
-        this.playerToTeam = playerToTeam;
-        this.playerToClass = playerToClass;
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.playerToClass = plugin.getPlayerToClass();
     }
 
     @Override

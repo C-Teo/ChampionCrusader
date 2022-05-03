@@ -27,6 +27,20 @@ public class PostCountdownTask extends BukkitRunnable {
      */
     @Override
     public void run() {
+        player.teleport(toSpawn(player,plugin)); // Teleport
+        player.setHealth(20d); // Reset health
+        player.sendTitle(ChatColor.AQUA + "GO!",null,0,20,0); // Send display message
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME,1.0f,1.0f); // Play sound
+        BukkitTask respawnClassTask = new RespawnClassTask(player,plugin).runTask(plugin);
+    }
+
+    /**
+     *
+     * @param player
+     * @param plugin
+     * @return
+     */
+    public static Location toSpawn(Player player, ChampionCrusader plugin) {
         // Set user to adventure mode
         player.setGameMode(GameMode.ADVENTURE);
 
@@ -36,7 +50,7 @@ public class PostCountdownTask extends BukkitRunnable {
 
         // Check which tag the user has for team spawn
         // Location cords for team is got from the config
-        String team = teamCommand.getTeam(player);
+        String team = teamCommand.getTeam(player, plugin);
 
         if (team != null) { // Check if we found a team
             // Get the arena and side linked
@@ -52,7 +66,7 @@ public class PostCountdownTask extends BukkitRunnable {
                         plugin.getConfig().getIntegerList("" + arena).get(2) + DISPLACEMENT);
                 location.setYaw(180f);
 
-            // If they are on the second side
+                // If they are on the second side
             } else if (side == 2) {
 
                 location = new Location(player.getWorld(),
@@ -65,11 +79,7 @@ public class PostCountdownTask extends BukkitRunnable {
             location = new Location(player.getWorld(),-530,115,448);
         }
 
-        player.teleport(location); // Teleport
-        player.setHealth(20d); // Reset health
-        player.sendTitle(ChatColor.AQUA + "GO!",null,0,20,0); // Send display message
-        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME,1.0f,1.0f); // Play sound
-        BukkitTask respawnClassTask = new RespawnClassTask(player,plugin).runTask(plugin);
+        return location;
     }
 }
 

@@ -25,9 +25,9 @@ import java.util.HashMap;
 
 public final class ChampionCrusader extends JavaPlugin {
 
-    public HashMap<String, String> playerToTeam = new HashMap<>();
-    public HashMap<String, String> playerToClass = new HashMap<>();
-    public HashMap<String, Boolean> teamReady = new HashMap<>();
+    private static final HashMap<String, String> playerToTeam = new HashMap<>();
+    private static final HashMap<String, String> playerToClass = new HashMap<>();
+    private static final HashMap<String, Boolean> teamReady = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -87,15 +87,27 @@ public final class ChampionCrusader extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RageListener(),this);
 
         // Commands
-        getCommand("berserker").setExecutor(new BerserkerCommand(this,playerToTeam,playerToClass));
-        getCommand("paladin").setExecutor(new PaladinCommand(this,playerToTeam,playerToClass));
-        getCommand("mage").setExecutor(new MageCommand(this,playerToTeam,playerToClass));
-        getCommand("ranger").setExecutor(new RangerCommand(this,playerToTeam,playerToClass));
-        getCommand("cc").setExecutor(new teamCommand(this,playerToTeam,playerToClass,teamReady));
+        getCommand("berserker").setExecutor(new BerserkerCommand(this));
+        getCommand("paladin").setExecutor(new PaladinCommand(this));
+        getCommand("mage").setExecutor(new MageCommand(this));
+        getCommand("ranger").setExecutor(new RangerCommand(this));
+        getCommand("cc").setExecutor(new teamCommand(this));
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public HashMap<String, String> getPlayerToTeam() {
+        return playerToTeam;
+    }
+
+    public HashMap<String, String> getPlayerToClass() {
+        return playerToClass;
+    }
+
+    public HashMap<String, Boolean> getTeamReady() {
+        return teamReady;
     }
 }

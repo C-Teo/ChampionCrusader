@@ -22,11 +22,10 @@ public class MageCommand implements CommandExecutor {
     private HashMap<String, String> playerToClass;
 
     // Pass in Plugin, Team Map and Class Map
-    public MageCommand(ChampionCrusader plugin, HashMap<String,String> playerToTeam,
-                       HashMap<String,String> playerToClass) {
+    public MageCommand(ChampionCrusader plugin) {
         this.testPlugin = plugin;
-        this.playerToTeam = playerToTeam;
-        this.playerToClass = playerToClass;
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.playerToClass = plugin.getPlayerToClass();
     }
 
     @Override

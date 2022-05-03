@@ -2,6 +2,7 @@ package me.mcss.championcrusader.command.teams;
 
 // Imports
 import me.mcss.championcrusader.ChampionCrusader;
+import me.mcss.championcrusader.task.respawn.PostCountdownTask;
 import me.mcss.championcrusader.task.tutorial.tutorialTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,11 +24,10 @@ public class teamCommand implements CommandExecutor {
     private final HashMap<String, Boolean> teamReady;
 
     // Pass the Map of all players and their Team Color
-    public teamCommand(ChampionCrusader plugin, HashMap<String,String> playerToTeam,
-                       HashMap<String,String> playerToClass, HashMap<String, Boolean> teamReady) {
-        this.playerToTeam = playerToTeam;
-        this.playerToClass = playerToClass;
-        this.teamReady = teamReady;
+    public teamCommand(ChampionCrusader plugin) {
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.playerToClass = plugin.getPlayerToClass();
+        this.teamReady = plugin.getTeamReady();
         this.plugin = plugin;
     }
 
@@ -94,7 +94,7 @@ public class teamCommand implements CommandExecutor {
                                         + "] " + ChatColor.DARK_RED + "That team color " + args[2] + " does not exist!");
 
                             }
-                        // If the player was not found throw error
+                        // If the player was not found
                         } else {
 
                             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
@@ -104,7 +104,15 @@ public class teamCommand implements CommandExecutor {
                     // If the first argument subcommand is invalid
                     } else if (args[0].equalsIgnoreCase("ready") && args.length == 1) {
 
-                        if (teamReady.get(getTeam(player))) {
+                        String team = getTeam(player, plugin); // Get the team who ran the command
+
+                        if (team == null) {
+                            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                    + "] " + ChatColor.DARK_RED + "You are not part of a team!");
+                            return true;
+                        }
+
+                        if (teamReady.get(team)) {
                             player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
                                     + "] " + ChatColor.DARK_GREEN + "Your team is already ready!");
                             return true;
@@ -115,8 +123,6 @@ public class teamCommand implements CommandExecutor {
                         boolean mage = false;
                         boolean paladin = false;
                         boolean ranger = false;
-
-                        String team = getTeam(player); // Get the team who ran the command
 
                         for (String name : playerToTeam.keySet()) {
                             // Check if the player is part of the right team
@@ -175,15 +181,14 @@ public class teamCommand implements CommandExecutor {
                                 if ((arena.equals("1") || arena.equals("2") || arena.equals("3") || arena.equals("4"))
                                         && (side.equals("1") || side.equals("2"))) {
                                     // First Index is Arena and Second Index is Side
-//                                    plugin.getConfig().getIntegerList(team).set(0,Integer.parseInt(arena));
-//                                    plugin.getConfig().getIntegerList(team).set(1,Integer.parseInt(side));
-
                                     ArrayList<Integer> pass = new ArrayList<Integer>();
                                     pass.add(Integer.parseInt(arena));
                                     pass.add(Integer.parseInt(side));
 
                                     plugin.getConfig().set(team,pass);
 
+                                    player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                            + "] " + ChatColor.WHITE + "Team " + team + " was assigned to Arena " + arena + " and Side " + side);
 
                                 } else {
                                     // Invalid Arena
@@ -204,6 +209,19 @@ public class teamCommand implements CommandExecutor {
                                     + "] " + ChatColor.DARK_RED + "Invalid sub-command!");
 
                         }
+                    } else if (args[0].equalsIgnoreCase("load") && args.length == 1) {
+
+                        player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                + "] " + ChatColor.DARK_GREEN + "Loading Game!");
+
+                        // For each player in the world
+                        for (Player user : player.getWorld().getPlayers()) {
+                            // Teleport Them
+                            user.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                                    + "] " + ChatColor.GREEN + "Loading into game!");
+
+                            user.teleport(PostCountdownTask.toSpawn(user,plugin));
+                        }
 
                     } else if (args[0].equalsIgnoreCase("links") && args.length == 1) {
 
@@ -219,7 +237,7 @@ public class teamCommand implements CommandExecutor {
                         getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("clear") && args.length == 1) {
-                        
+
                         player.sendMessage(ChatColor.GREEN + "Your inventory has been cleared! Munched by Rapid");
                         player.getEquipment().setHelmet(null);
                         player.getEquipment().setChestplate(null);
@@ -229,18 +247,35 @@ public class teamCommand implements CommandExecutor {
 
                     } else if (args[0].equalsIgnoreCase("help") && args.length == 1) {
 
+                        // Send the Header to Player
                         getHeader(player);
 
-                        player.sendMessage(ChatColor.GOLD + "/cc teams + " + ChatColor.WHITE + "Returns all players in each team");
+                        player.sendMessage(ChatColor.YELLOW + "/cc teams: "
+                                + ChatColor.WHITE + "Return a list of all players in each Team and Class.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc links: "
+                                + ChatColor.WHITE + "Returns a list of all Teams and Arena / Sides linked.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc tutorial: "
+                                + ChatColor.WHITE + "Sends the player through a tutorial.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc ready: "
+                                + ChatColor.WHITE + "Set your team to ready!");
+                        player.sendMessage(ChatColor.YELLOW + "/cc status: "
+                                + ChatColor.WHITE + "Returns a list of all Teams and their Ready status.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc setteam: "
+                                + ChatColor.BLUE + "[PLAYER] [TEAM] " + ChatColor.WHITE + "Set a player to a team.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc linkteam: "
+                                + ChatColor.BLUE + "[TEAM] [ARENA] [SIDE] " + ChatColor.WHITE + "Link a Team to an Arena and Side.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc clear: "
+                                + ChatColor.WHITE + "Clear your inventory including armor.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc load: "
+                                + ChatColor.WHITE + "Teleport all players to their respective Team spawnpoint.");
 
+                        // Send the Footer to Player
                         getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("status") && args.length == 1) {
 
-                        // Send the Header
-                        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
-                                + ChatColor.WHITE + " Team Ready " + ChatColor.GRAY + "]}>=-");
-                        player.sendMessage(ChatColor.GOLD + "========================================");
+                        // Send the Header to Player
+                        getHeader(player);
 
                         // Team and Ready Status
                         for (String team : teamReady.keySet()) {
@@ -255,10 +290,12 @@ public class teamCommand implements CommandExecutor {
                             }
                         }
 
+                        // Send the Footer to Player
                         getFooter(player);
 
                     } else if (args[0].equalsIgnoreCase("teams") && args.length == 1) {
 
+                        // Send the Header to Player
                         getHeader(player);
 
                         // Print every player with their team and class if they have a class
@@ -272,6 +309,7 @@ public class teamCommand implements CommandExecutor {
                             }
                         }
 
+                        // Send the Footer to Player
                         getFooter(player);
 
                     } else {
@@ -350,25 +388,13 @@ public class teamCommand implements CommandExecutor {
     /**
      * Given a player, return their team if they have one
      * @param player Player to check teams
-     * @return Team or null if no Team
+     * @param plugin Main plugin storing Hash Maps
+     * @return Team if they have one, Null if they dont
      */
-    public static String getTeam(Player player) {
-        if (player.getScoreboardTags().contains("RED")) {
-            return "RED";
-        } else if (player.getScoreboardTags().contains("BLUE")) {
-            return "BLUE";
-        } else if (player.getScoreboardTags().contains("GREEN")) {
-            return "GREEN";
-        } else if (player.getScoreboardTags().contains("YELLOW")) {
-            return "YELLOW";
-        } else if (player.getScoreboardTags().contains("PURPLE")) {
-            return "PURPLE";
-        } else if (player.getScoreboardTags().contains("PINK")) {
-            return "PINK";
-        } else if (player.getScoreboardTags().contains("CYAN")) {
-            return "CYAN";
-        } else if (player.getScoreboardTags().contains("ORANGE")) {
-            return "ORANGE";
+    public static String getTeam(Player player, ChampionCrusader plugin) {
+        HashMap<String,String> playerToTeam = plugin.getPlayerToTeam();
+        if (playerToTeam.containsKey(player.getName())) {
+            return playerToTeam.get(player.getName());
         }
         return null;
     }
@@ -379,9 +405,8 @@ public class teamCommand implements CommandExecutor {
      */
     public static void getHeader(Player player) {
         // Send the Header
-        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader"
-                + ChatColor.WHITE + " Registered Players " + ChatColor.GRAY + "]}>=-");
-        player.sendMessage(ChatColor.GOLD + "========================================");
+        player.sendMessage(ChatColor.GRAY + "-=<{[" + ChatColor.YELLOW + " Champion" + ChatColor.GOLD + " Crusader "
+                + ChatColor.GRAY + "]}>=-");
     }
 
     /**
@@ -389,7 +414,6 @@ public class teamCommand implements CommandExecutor {
      * @param player Player that gets the message
      */
     public static void getFooter(Player player) {
-        // Send the Footer
-        player.sendMessage(ChatColor.GOLD + "========================================");
+        // Send the Footer // Currently Empty
     }
 }

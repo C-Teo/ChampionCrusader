@@ -20,11 +20,10 @@ public class PaladinCommand implements CommandExecutor {
     private HashMap<String, String> playerToClass;
 
     // Pass in Plugin, Team Map and Class Map
-    public PaladinCommand(ChampionCrusader plugin, HashMap<String,String> playerToTeam,
-                          HashMap<String,String> playerToClass) {
+    public PaladinCommand(ChampionCrusader plugin) {
         this.testPlugin = plugin;
-        this.playerToTeam = playerToTeam;
-        this.playerToClass = playerToClass;
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.playerToClass = plugin.getPlayerToClass();
     }
 
     @Override
