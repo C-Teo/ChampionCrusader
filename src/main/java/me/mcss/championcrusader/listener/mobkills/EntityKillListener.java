@@ -33,8 +33,11 @@ public class EntityKillListener implements Listener {
                     playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
 
                     // Healing the killer
-                    playerKiller.addPotionEffect((new PotionEffect(PotionEffectType.HEAL,
-                            1, 1)));
+                    if (playerKiller.getHealth() + 6 > 20.0) {
+                        playerKiller.setHealth(20.0);
+                    } else {
+                        playerKiller.setHealth(playerKiller.getHealth() + 6);
+                    }
 
                     // Checks if the killer is an arrow
                 } else if (event.getDamager() instanceof Arrow) {
@@ -55,8 +58,12 @@ public class EntityKillListener implements Listener {
                         playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
 
                         // Healing the killer
-                        playerKiller.addPotionEffect((new PotionEffect(PotionEffectType.HEAL,
-                                1, 1)));
+                        if (playerKiller.getHealth() + 6 > 20.0) {
+                            playerKiller.setHealth(20.0);
+                        } else {
+                            playerKiller.setHealth(playerKiller.getHealth() + 6);
+                        }
+
                     }
                     // Checks if the killer is a potion
                 } else if (event.getDamager() instanceof ThrownPotion) {
@@ -77,8 +84,89 @@ public class EntityKillListener implements Listener {
                         playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
 
                         // Healing the killer
-                        playerKiller.addPotionEffect((new PotionEffect(PotionEffectType.HEAL,
-                                1, 1)));
+                        if (playerKiller.getHealth() + 6 > 20.0) {
+                            playerKiller.setHealth(20.0);
+                        } else {
+                            playerKiller.setHealth(playerKiller.getHealth() + 6);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (event.getEntity() instanceof Pig) {
+
+            // Checks if the pig is killed
+            if (((Pig) event.getEntity()).getHealth() <= event.getFinalDamage()) {
+
+                // Checks if the killer is a player
+                if (event.getDamager() instanceof Player) {
+
+                    // Saves the player as playerkiller
+                    Player playerKiller = (Player) event.getDamager();
+
+                    // Graphical User Interface
+                    playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" +
+                            ChatColor.GRAY + "] " + ChatColor.BLUE
+                            + "You killed a Mob! Have some heals!");
+                    playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
+
+                    // Healing the killer
+                    if (playerKiller.getHealth() + 4 > 20.0) {
+                        playerKiller.setHealth(20.0);
+                    } else {
+                        playerKiller.setHealth(playerKiller.getHealth() + 4);
+                    }
+
+                    // Checks if the killer is an arrow
+                } else if (event.getDamager() instanceof Arrow) {
+
+                    // Saves the arrow
+                    Arrow arrow = (Arrow) event.getDamager();
+
+                    // If the Shooter is a player
+                    if (arrow.getShooter() instanceof Player) {
+
+                        // Saves the player as playerkiller
+                        Player playerKiller = (Player) arrow.getShooter();
+
+                        // Graphical User Interface
+                        playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" +
+                                ChatColor.GRAY + "] " + ChatColor.BLUE
+                                + "You killed a Mob! Have some heals!");
+                        playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
+
+                        // Healing the killer
+                        if (playerKiller.getHealth() + 4 > 20.0) {
+                            playerKiller.setHealth(20.0);
+                        } else {
+                            playerKiller.setHealth(playerKiller.getHealth() + 4);
+                        }
+                    }
+                    // Checks if the killer is a potion
+                } else if (event.getDamager() instanceof ThrownPotion) {
+
+                    // Saves the potion
+                    ThrownPotion potion = (ThrownPotion) event.getDamager();
+
+                    // If the shooter is a player
+                    if (potion.getShooter() instanceof Player) {
+
+                        // Saves the player as playerkiller
+                        Player playerKiller = (Player) potion.getShooter();
+
+                        // Graphical User Interface
+                        playerKiller.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" +
+                                ChatColor.GRAY + "] " + ChatColor.BLUE
+                                + "You killed a Mob! Have some heals!");
+                        playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
+
+                        // Healing the killer
+                        if (playerKiller.getHealth() + 4 > 20.0) {
+                            playerKiller.setHealth(20.0);
+                        } else {
+                            playerKiller.setHealth(playerKiller.getHealth() + 4);
+                        }
                     }
                 }
             }
