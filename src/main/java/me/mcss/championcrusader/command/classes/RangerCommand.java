@@ -21,12 +21,14 @@ public class RangerCommand implements CommandExecutor {
     private final ChampionCrusader plugin;
     private HashMap<String, String> playerToTeam;
     private HashMap<String, String> playerToClass;
+    private HashMap<String, Boolean> teamReady;
 
     // Pass in Plugin, Team Map and Class Map
     public RangerCommand(ChampionCrusader plugin) {
         this.plugin = plugin;
         this.playerToTeam = plugin.getPlayerToTeam();
         this.playerToClass = plugin.getPlayerToClass();
+        this.teamReady = plugin.getTeamReady();
     }
 
     @Override
@@ -38,7 +40,9 @@ public class RangerCommand implements CommandExecutor {
 
             if (player.hasPermission("champions.select")) {
 
-                if (playerToTeam.containsKey(player.getName())) { // Check if player has a team
+                boolean hasTeam = playerToTeam.containsKey(player.getName());
+
+                if (hasTeam && !teamReady.get(playerToTeam.get(player.getName()))) { // Check if player has a team
 
                     // This piece of code checks if someone on their team is already this class.
                     String playerTeam = playerToTeam.get(player.getName()); // Player team color
@@ -102,7 +106,9 @@ public class RangerCommand implements CommandExecutor {
                     player.sendTitle(ChatColor.GREEN + "You have picked" + ChatColor.GOLD + " Ranger", "Good Luck", 1, 50, 1);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
 
-                    player.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "The Ranger relies on their quick aim for reliable damage. Get your arrows back for unlimited arrows, but ONLY when you hit your target! Make sure not to miss and lose your arrows!");
+                    player.sendMessage(ChatColor.GRAY + "The Ranger relies on their quick aim for reliable damage." +
+                            " Get your arrows back for unlimited arrows, but ONLY when you hit your target!" +
+                            " Make sure not to miss and lose your arrows!");
 
 
                     // Passing Variable
@@ -138,7 +144,7 @@ public class RangerCommand implements CommandExecutor {
                 } else {
 
                     player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                            + "] " + ChatColor.DARK_RED + "You must be a part of a team first!");
+                            + "] " + ChatColor.DARK_RED + "Your team is already ready or you are not part of a team!");
 
                 }
             } else {
