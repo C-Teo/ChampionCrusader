@@ -13,8 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,12 +22,14 @@ public class BerserkerCommand implements CommandExecutor {
     private final ChampionCrusader testPlugin;
     private HashMap<String, String> playerToTeam;
     private HashMap<String, String> playerToClass;
+    private HashMap<String, Boolean> teamReady;
 
     // Pass in Plugin, Team Map and Class Map
     public BerserkerCommand(ChampionCrusader plugin) {
         this.testPlugin = plugin;
         this.playerToTeam = plugin.getPlayerToTeam();
         this.playerToClass = plugin.getPlayerToClass();
+        this.teamReady = plugin.getTeamReady();
     }
 
     @Override
@@ -41,7 +41,9 @@ public class BerserkerCommand implements CommandExecutor {
 
             if (player.hasPermission("champions.select")) { // Check for permission
 
-                if (playerToTeam.containsKey(player.getName())) { // Check if player has a team
+                boolean hasTeam = playerToTeam.containsKey(player.getName());
+
+                if (hasTeam && !teamReady.get(playerToTeam.get(player.getName()))) { // Check if player has a team
 
                     // This piece of code checks if someone on their team is already this class.
                     String playerTeam = playerToTeam.get(player.getName()); // Player team color
@@ -140,7 +142,7 @@ public class BerserkerCommand implements CommandExecutor {
                 } else {
 
                     player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                            + "] " + ChatColor.DARK_RED + "You must be a part of a team first!");
+                            + "] " + ChatColor.DARK_RED + "Your team is already ready or you are not part of a team!");
 
                 }
             // Player has no permission to use this command

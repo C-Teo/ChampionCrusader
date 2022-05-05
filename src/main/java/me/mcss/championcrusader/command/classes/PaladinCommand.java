@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitTask;
-
 import java.util.HashMap;
 
 public class PaladinCommand implements CommandExecutor {
@@ -18,12 +17,14 @@ public class PaladinCommand implements CommandExecutor {
     private final ChampionCrusader testPlugin;
     private HashMap<String, String> playerToTeam;
     private HashMap<String, String> playerToClass;
+    private HashMap<String, Boolean> teamReady;
 
     // Pass in Plugin, Team Map and Class Map
     public PaladinCommand(ChampionCrusader plugin) {
         this.testPlugin = plugin;
         this.playerToTeam = plugin.getPlayerToTeam();
         this.playerToClass = plugin.getPlayerToClass();
+        this.teamReady = plugin.getTeamReady();
     }
 
     @Override
@@ -35,7 +36,9 @@ public class PaladinCommand implements CommandExecutor {
 
             if (player.hasPermission("champions.select")) { // Check for permission
 
-                if (playerToTeam.containsKey(player.getName())) { // Check if player has a team
+                boolean hasTeam = playerToTeam.containsKey(player.getName());
+
+                if (hasTeam && !teamReady.get(playerToTeam.get(player.getName()))) { // Check if player has a team
 
                     // This piece of code checks if someone on their team is already this class.
                     String playerTeam = playerToTeam.get(player.getName()); // Player team color
@@ -97,7 +100,8 @@ public class PaladinCommand implements CommandExecutor {
                     player.sendTitle(ChatColor.GREEN + "You have picked" + ChatColor.AQUA + " Paladin", "Good Luck", 1, 50, 1);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 10, 1);
 
-                    player.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "The most armored champion, the Paladin is tough as nails. Receive a 10 second resistance buff every time you get a kill!");
+                    player.sendMessage(ChatColor.GRAY + "" + "The most armored champion," +
+                            " the Paladin is tough as nails. Receive a 10 second resistance buff every time you get a kill!");
 
                     // Giving Items and Armor
                     player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
@@ -114,7 +118,7 @@ public class PaladinCommand implements CommandExecutor {
                 } else {
 
                     player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                            + "] " + ChatColor.DARK_RED + "You must be a part of a team first!");
+                            + "] " + ChatColor.DARK_RED + "Your team is already ready or you are not part of a team!");
 
                 }
             } else {
