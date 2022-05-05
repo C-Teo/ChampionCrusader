@@ -34,12 +34,12 @@ public final class ChampionCrusader extends JavaPlugin {
         // Plugin startup logic
         teamReady.put("RED",false);
         teamReady.put("BLUE",false);
-        teamReady.put("GREEN",false);
-        teamReady.put("YELLOW",false);
-        teamReady.put("PINK",false);
-        teamReady.put("PURPLE",false);
-        teamReady.put("CYAN",false);
-        teamReady.put("ORANGE",false);
+        teamReady.put("GREEN",true);
+        teamReady.put("YELLOW",true);
+        teamReady.put("PINK",true);
+        teamReady.put("PURPLE",true);
+        teamReady.put("CYAN",true);
+        teamReady.put("ORANGE",true);
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
