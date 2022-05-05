@@ -37,7 +37,6 @@ public class PotionSplashListener implements Listener { // Check when a potion s
 
                 // Give the potion
                 BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
-                player.sendMessage("Regeneration Potion"); // Test Message
 
             // If potion is POISON
             } else if (event.getPotion().getEffects().contains
@@ -45,7 +44,6 @@ public class PotionSplashListener implements Listener { // Check when a potion s
 
                 // Give the potion
                 BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
-                player.sendMessage("Poison Potion"); // Test Message
 
             // If potion is HARM
             } else if (event.getPotion().getEffects().contains
@@ -53,7 +51,6 @@ public class PotionSplashListener implements Listener { // Check when a potion s
 
                 // Give the potion
                 BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
-                player.sendMessage("Harm Potion"); // Test Message
 
             // If potion is HEAL
             } else if (event.getPotion().getEffects().contains
@@ -61,7 +58,6 @@ public class PotionSplashListener implements Listener { // Check when a potion s
 
                 // Give the potion
                 BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
-                player.sendMessage("Heal Potion"); // Test Message
 
             // If potion is STRENGTH
             } else if (event.getPotion().getEffects().contains
@@ -69,7 +65,6 @@ public class PotionSplashListener implements Listener { // Check when a potion s
 
                 // Give the potion
                 BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin, 200L);
-                player.sendMessage("Strength Potion"); // Test Message
             }
         }
     }

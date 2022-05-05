@@ -26,12 +26,11 @@ public class GivePotionTask extends BukkitRunnable {
     public void run() {
         // If the player has the mage tag
         if (player.getScoreboardTags().contains("mage")) {
-
             // Give them the potion, sound, and message
             player.getInventory().addItem(potion);
             player.playSound(player.getLocation(), Sound.ENTITY_WITCH_DRINK,0.5f,1.0f);
-            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Cooldown" + ChatColor.GRAY + "] " + ChatColor.BLUE
-                    + " A potion has refreshed!");
+            player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
+                    + "] " + ChatColor.WHITE + "A potion has refreshed!");
         }
     }
 }
