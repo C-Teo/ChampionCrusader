@@ -214,15 +214,8 @@ public class teamCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
                                 + "] " + ChatColor.DARK_GREEN + "Loading Game!");
 
-                        // For each player in the world
-                        for (Player user : player.getWorld().getPlayers()) {
-                            // Teleport Them
-                            user.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
-                                    + "] " + ChatColor.GREEN + "Loading into game!");
-
-                            user.teleport(PostCountdownTask.toSpawn(user,plugin));
-                        }
-
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "function champcrusaders:gamestart");
                     } else if (args[0].equalsIgnoreCase("links") && args.length == 1) {
 
                         getHeader(player);
@@ -268,6 +261,8 @@ public class teamCommand implements CommandExecutor {
                                 + ChatColor.WHITE + "Clear your inventory including armor.");
                         player.sendMessage(ChatColor.YELLOW + "/cc load: "
                                 + ChatColor.WHITE + "Teleport all players to their respective Team spawnpoint.");
+                        player.sendMessage(ChatColor.YELLOW + "/cc load: "
+                                + ChatColor.WHITE + "Teleport all players to their respective Team spawnpoint.");
 
                         // Send the Footer to Player
                         getFooter(player);
@@ -311,6 +306,11 @@ public class teamCommand implements CommandExecutor {
 
                         // Send the Footer to Player
                         getFooter(player);
+
+                    } else if (args[0].equalsIgnoreCase("start") && args.length == 1) {
+
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                "function champcrusaders:gamestarttimer");
 
                     } else {
 
