@@ -159,7 +159,7 @@ public class teamCommand implements CommandExecutor {
                         BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,280);
                         BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,420);
                         BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,560);
-                        BukkitTask msgSix = new tutorialTask(6,player).runTaskLater(plugin,600);
+                        BukkitTask msgSix = new tutorialTask(6,player).runTaskLater(plugin,700);
 
 
                     } else if (args[0].equalsIgnoreCase("linkteam") && args.length == 4) {
