@@ -8,6 +8,7 @@ import me.mcss.championcrusader.listener.classes.*;
 // Ghost Spawn Imports
 import me.mcss.championcrusader.listener.mobkills.EntityHealListener;
 import me.mcss.championcrusader.listener.mobkills.EntityKillListener;
+import me.mcss.championcrusader.listener.mobkills.MobSpawnListener;
 import me.mcss.championcrusader.listener.mobkills.PotionEffectListener;
 import me.mcss.championcrusader.listener.respawn.*;
 
@@ -34,8 +35,8 @@ public final class ChampionCrusader extends JavaPlugin {
         // Plugin startup logic
         teamReady.put("RED",false);
         teamReady.put("BLUE",false);
-        teamReady.put("GREEN",true);
-        teamReady.put("YELLOW",true);
+        teamReady.put("GREEN",false);
+        teamReady.put("YELLOW",false);
         teamReady.put("PINK",true);
         teamReady.put("PURPLE",true);
         teamReady.put("CYAN",true);
@@ -71,9 +72,10 @@ public final class ChampionCrusader extends JavaPlugin {
         Checks the mobs that are killed and gives the
         players rewards for killing them
          */
-        getServer().getPluginManager().registerEvents(new EntityKillListener(),this);
+        getServer().getPluginManager().registerEvents(new EntityKillListener(this),this);
         getServer().getPluginManager().registerEvents(new PotionEffectListener(),this);
         getServer().getPluginManager().registerEvents(new EntityHealListener(),this);
+        getServer().getPluginManager().registerEvents(new MobSpawnListener(),this);
 
         // -= CLASS X =-
         /*

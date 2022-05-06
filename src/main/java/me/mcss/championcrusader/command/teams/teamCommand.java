@@ -2,6 +2,7 @@ package me.mcss.championcrusader.command.teams;
 
 // Imports
 import me.mcss.championcrusader.ChampionCrusader;
+import me.mcss.championcrusader.task.respawn.CountdownTask;
 import me.mcss.championcrusader.task.respawn.PostCountdownTask;
 import me.mcss.championcrusader.task.tutorial.tutorialTask;
 import org.bukkit.Bukkit;
@@ -311,6 +312,13 @@ public class teamCommand implements CommandExecutor {
 
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
                                 "function champcrusaders:gamestarttimer");
+
+                        for (Player user : player.getWorld().getPlayers()) {
+                            BukkitTask countThree = new CountdownTask(user, ChatColor.YELLOW + "3", 0.4f).runTaskLater(this.plugin,0L);
+                            BukkitTask countTwo = new CountdownTask(user, ChatColor.YELLOW + "2", 0.6f).runTaskLater(this.plugin, 20L);
+                            BukkitTask countOne = new CountdownTask(user, ChatColor.GREEN + "1", 0.8f).runTaskLater(this.plugin, 40L);
+                            BukkitTask countGO = new CountdownTask(user, ChatColor.BLUE + "GO", 1.0f).runTaskLater(this.plugin, 60L);
+                        }
 
                     } else {
 

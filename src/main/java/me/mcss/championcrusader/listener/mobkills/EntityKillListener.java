@@ -1,15 +1,24 @@
 package me.mcss.championcrusader.listener.mobkills;
 
+import me.mcss.championcrusader.ChampionCrusader;
+import me.mcss.championcrusader.task.mobkills.HealthMobRespawn;
+import me.mcss.championcrusader.task.respawn.RespawnTask;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 public class EntityKillListener implements Listener {
+
+    ChampionCrusader plugin;
+
+    public EntityKillListener(ChampionCrusader plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onMobHurt(EntityDamageByEntityEvent event) {
@@ -91,6 +100,8 @@ public class EntityKillListener implements Listener {
                         }
                     }
                 }
+                BukkitTask respawnTask = new HealthMobRespawn(event.getEntityType(),
+                        event.getEntity().getLocation()).runTaskLater(this.plugin,300);
             }
         }
 
@@ -169,6 +180,8 @@ public class EntityKillListener implements Listener {
                         }
                     }
                 }
+                BukkitTask respawnTask = new HealthMobRespawn(event.getEntityType(),
+                        event.getEntity().getLocation()).runTaskLater(this.plugin,300);
             }
         }
 
