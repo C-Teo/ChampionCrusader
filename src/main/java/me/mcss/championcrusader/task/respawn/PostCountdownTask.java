@@ -9,16 +9,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashMap;
+
 public class PostCountdownTask extends BukkitRunnable {
 
     // Local variables
     private final Player player;
     private final ChampionCrusader plugin;
+    private final HashMap<String, Boolean> gameRunning;
 
     // Register variables to be passed in
     public PostCountdownTask(Player player, ChampionCrusader plugin) {
         this.player = player;
         this.plugin = plugin;
+        this.gameRunning = plugin.getGameRunning();
     }
 
     /*
@@ -40,7 +44,7 @@ public class PostCountdownTask extends BukkitRunnable {
      * @param plugin
      * @return
      */
-    public static Location toSpawn(Player player, ChampionCrusader plugin) {
+    public Location toSpawn(Player player, ChampionCrusader plugin) {
         // Set user to adventure mode
         player.setGameMode(GameMode.ADVENTURE);
 
@@ -58,21 +62,26 @@ public class PostCountdownTask extends BukkitRunnable {
             int side = plugin.getConfig().getIntegerList(team).get(1);
 
             // If they are on the first side
-            if (side == 1) {
+            if (gameRunning.get("A" + arena)) {
+                if (side == 1) {
 
-                location = new Location(player.getWorld(),
-                        plugin.getConfig().getIntegerList("" + arena).get(0),
-                        plugin.getConfig().getIntegerList("" + arena).get(1) + HEIGHT,
-                        plugin.getConfig().getIntegerList("" + arena).get(2) + DISPLACEMENT);
-                location.setYaw(180f);
+                    location = new Location(player.getWorld(),
+                            plugin.getConfig().getIntegerList("" + arena).get(0),
+                            plugin.getConfig().getIntegerList("" + arena).get(1) + HEIGHT,
+                            plugin.getConfig().getIntegerList("" + arena).get(2) + DISPLACEMENT);
+                    location.setYaw(180f);
 
-                // If they are on the second side
-            } else if (side == 2) {
+                    // If they are on the second side
+                } else if (side == 2) {
 
-                location = new Location(player.getWorld(),
-                        plugin.getConfig().getIntegerList("" + arena).get(0),
-                        plugin.getConfig().getIntegerList("" + arena).get(1) + HEIGHT,
-                        plugin.getConfig().getIntegerList("" + arena).get(2) - DISPLACEMENT);
+                    location = new Location(player.getWorld(),
+                            plugin.getConfig().getIntegerList("" + arena).get(0),
+                            plugin.getConfig().getIntegerList("" + arena).get(1) + HEIGHT,
+                            plugin.getConfig().getIntegerList("" + arena).get(2) - DISPLACEMENT);
+                }
+            } else {
+                // Hub Spawn location
+                location = new Location(player.getWorld(),-530,115,448);
             }
         } else {
             // Hub Spawn location

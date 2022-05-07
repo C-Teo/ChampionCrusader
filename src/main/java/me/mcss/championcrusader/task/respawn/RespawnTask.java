@@ -63,12 +63,12 @@ public class RespawnTask extends BukkitRunnable {
 
         }
 
+        // Set as spectator to the player
+        // player.setSpectatorTarget(playerKiller);
+
         // Set player to Spectator, show message on screen
         player.setGameMode(GameMode.SPECTATOR);
         player.sendTitle(ChatColor.RED + "You have died!", null, 20, 20, 20);
-
-        // Set as spectator to the player
-        player.setSpectatorTarget(playerKiller);
 
         // Countdown tasks -> see Countdown for info
         BukkitTask countFive = new CountdownTask(player, ChatColor.RED + "5", 0.2f).runTaskLater(this.plugin, 100L);

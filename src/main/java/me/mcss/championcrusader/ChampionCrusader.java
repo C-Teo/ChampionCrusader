@@ -7,7 +7,7 @@ import me.mcss.championcrusader.listener.classes.*;
 
 // Ghost Spawn Imports
 import me.mcss.championcrusader.listener.mobkills.EntityHealListener;
-import me.mcss.championcrusader.listener.mobkills.EntityKillListener;
+import me.mcss.championcrusader.listener.mobkills.EntityDamageListener;
 import me.mcss.championcrusader.listener.mobkills.MobSpawnListener;
 import me.mcss.championcrusader.listener.mobkills.PotionEffectListener;
 import me.mcss.championcrusader.listener.respawn.*;
@@ -29,6 +29,7 @@ public final class ChampionCrusader extends JavaPlugin {
     private static final HashMap<String, String> playerToTeam = new HashMap<>();
     private static final HashMap<String, String> playerToClass = new HashMap<>();
     private static final HashMap<String, Boolean> teamReady = new HashMap<>();
+    private static final HashMap<String, Boolean> gameRunning = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -41,6 +42,11 @@ public final class ChampionCrusader extends JavaPlugin {
         teamReady.put("PURPLE",true);
         teamReady.put("CYAN",true);
         teamReady.put("ORANGE",true);
+
+        gameRunning.put("A1",false);
+        gameRunning.put("A2",false);
+        gameRunning.put("A3",false);
+        gameRunning.put("A4",false);
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -72,7 +78,7 @@ public final class ChampionCrusader extends JavaPlugin {
         Checks the mobs that are killed and gives the
         players rewards for killing them
          */
-        getServer().getPluginManager().registerEvents(new EntityKillListener(this),this);
+        getServer().getPluginManager().registerEvents(new EntityDamageListener(this),this);
         getServer().getPluginManager().registerEvents(new PotionEffectListener(),this);
         getServer().getPluginManager().registerEvents(new EntityHealListener(),this);
         getServer().getPluginManager().registerEvents(new MobSpawnListener(),this);
@@ -101,15 +107,11 @@ public final class ChampionCrusader extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public HashMap<String, String> getPlayerToTeam() {
-        return playerToTeam;
-    }
+    public HashMap<String, String> getPlayerToTeam() { return playerToTeam; }
 
-    public HashMap<String, String> getPlayerToClass() {
-        return playerToClass;
-    }
+    public HashMap<String, String> getPlayerToClass() { return playerToClass; }
 
-    public HashMap<String, Boolean> getTeamReady() {
-        return teamReady;
-    }
+    public HashMap<String, Boolean> getTeamReady() { return teamReady; }
+
+    public HashMap<String, Boolean> getGameRunning() { return gameRunning; }
 }

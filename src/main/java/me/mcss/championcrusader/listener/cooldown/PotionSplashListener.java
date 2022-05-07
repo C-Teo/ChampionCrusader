@@ -11,6 +11,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashMap;
+
 public class PotionSplashListener implements Listener { // Check when a potion splashes
 
     // Local Variable
@@ -36,35 +38,35 @@ public class PotionSplashListener implements Listener { // Check when a potion s
                     (new PotionEffect(PotionEffectType.REGENERATION,300,0))) {
 
                 // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
+                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
 
             // If potion is POISON
             } else if (event.getPotion().getEffects().contains
                     (new PotionEffect(PotionEffectType.POISON,200,0))) {
 
                 // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
+                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
 
             // If potion is HARM
             } else if (event.getPotion().getEffects().contains
                     (new PotionEffect(PotionEffectType.HARM,20,1))) {
 
                 // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
+                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
 
             // If potion is HEAL
             } else if (event.getPotion().getEffects().contains
                     (new PotionEffect(PotionEffectType.HEAL,20,1))) {
 
                 // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin,200L);
+                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
 
             // If potion is STRENGTH
             } else if (event.getPotion().getEffects().contains
                     (new PotionEffect(PotionEffectType.INCREASE_DAMAGE,200,0))) {
 
                 // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion).runTaskLater(this.plugin, 200L);
+                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin, 200L);
             }
         }
     }
