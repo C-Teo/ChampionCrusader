@@ -47,10 +47,6 @@ public class RespawnTask extends BukkitRunnable {
 
             // Play sound for killer as well
             playerKiller.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1.0f, 1.0f);
-
-            // Set as spectator to the player
-            player.setSpectatorTarget(playerKiller);
-
         } else { // Else the killer was an entity
 
             // Send only message to player
@@ -62,6 +58,9 @@ public class RespawnTask extends BukkitRunnable {
         // Set player to Spectator, show message on screen
         player.setGameMode(GameMode.SPECTATOR);
         player.sendTitle(ChatColor.RED + "You have died!", null, 20, 20, 20);
+
+        // Set as spectator to the player
+        player.setSpectatorTarget(playerKiller);
 
         // Countdown tasks -> see Countdown for info
         BukkitTask countFive = new CountdownTask(player, ChatColor.RED + "5", 0.2f).runTaskLater(this.plugin, 100L);

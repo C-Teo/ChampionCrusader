@@ -235,7 +235,6 @@ public class teamCommand implements CommandExecutor {
                     + "] " + ChatColor.WHITE + "Clearing your inventory!");
             user.getInventory().clear();
             user.setHealth(20f);
-            playerToClass.remove(user.getName());
         }
         // Reset all mobs and doors
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
@@ -250,6 +249,8 @@ public class teamCommand implements CommandExecutor {
                 "function champcrusaders:resetdoor3");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
                 "function champcrusaders:resetdoor4");
+        // Reset all Classes
+        playerToClass.clear();
         // Reset the Ready Status of each Team
         for (String team : teamReady.keySet()) {
             teamReady.put(team,false);
