@@ -108,6 +108,13 @@ public class PaladinCommand implements CommandExecutor {
                     player.getEquipment().setChestplate(null);
                     player.getEquipment().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 
+
+                    // Locked Bar
+                    // Locked Bar
+                    for (int i = 1; i < 9; i++) {
+                        player.getInventory().setItem(i,new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+                    }
+
                     // Passing Variable
                     BukkitTask leatherTask = new LeatherTask(player).runTask(testPlugin);
 

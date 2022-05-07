@@ -3,11 +3,13 @@ package me.mcss.championcrusader.listener.mobkills;
 import me.mcss.championcrusader.ChampionCrusader;
 import me.mcss.championcrusader.task.mobkills.HealthMobRespawn;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 public class EntityDamageListener implements Listener {
@@ -117,6 +119,13 @@ public class EntityDamageListener implements Listener {
                             + "You killed a Mob! Have some heals!");
                     playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
 
+                    // Check if the Player is a Ranger and needs an Arrow
+                    if (playerKiller.getScoreboardTags().contains("ranger")) {
+                        if (!playerKiller.getInventory().contains(new ItemStack(Material.ARROW))) {
+                            playerKiller.getInventory().setItem(5,new ItemStack(Material.ARROW));
+                        }
+                    }
+
                     // Healing the killer
                     if (playerKiller.getHealth() + 4 > 20.0) {
                         playerKiller.setHealth(20.0);
@@ -179,7 +188,7 @@ public class EntityDamageListener implements Listener {
                         event.getEntity().getLocation()).runTaskLater(this.plugin, 300);
             }
         } else if (event.getEntity() instanceof IronGolem) {
-            // Checks if entity is an Iron Golem
+            // TODO Checks if entity is an Iron Golem
             if (event.getDamager() instanceof Player) {
                 // Saves player
                 Player player = (Player) event.getDamager();

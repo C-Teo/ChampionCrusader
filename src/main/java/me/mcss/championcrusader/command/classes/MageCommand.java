@@ -148,10 +148,16 @@ public class MageCommand implements CommandExecutor {
                     harm.setItemMeta(harmmeta);
 
                     // Giving Players the Potions
-                    player.getInventory().addItem(new ItemStack(regen));
-                    player.getInventory().addItem(new ItemStack(health));
-                    player.getInventory().addItem(new ItemStack(poison));
-                    player.getInventory().addItem(new ItemStack(harm));
+                    player.getInventory().setItem(1,new ItemStack(poison));
+                    player.getInventory().setItem(2,new ItemStack(harm));
+                    player.getInventory().setItem(3,new ItemStack(regen));
+                    player.getInventory().setItem(4,new ItemStack(health));
+
+                    // Locked Bar
+                    // Locked Bar
+                    for (int i = 5; i < 9; i++) {
+                        player.getInventory().setItem(i,new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+                    }
 
                     // Add the player to the Class Map with this class
                     playerToClass.put(player.getName(),"mage");

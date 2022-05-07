@@ -135,6 +135,11 @@ public class BerserkerCommand implements CommandExecutor {
                     // Giving Potions
                     player.getInventory().addItem(rage);
 
+                    // Locked Bar
+                    for (int i = 2; i < 9; i++) {
+                        player.getInventory().setItem(i,new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+                    }
+
                     // Add the player to the Class Map with this class
                     playerToClass.put(player.getName(),"berserker");
 

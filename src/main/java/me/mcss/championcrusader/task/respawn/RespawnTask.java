@@ -23,13 +23,6 @@ public class RespawnTask extends BukkitRunnable {
         this.playerKiller = playerKiller;
     }
 
-    // Overload Constructor
-    public RespawnTask(ChampionCrusader plugin, Player player) {
-        this.plugin = plugin;
-        this.player = player;
-        this.playerKiller = null;
-    }
-
     /*
     This is the code that when a user is supposed to
     die.
@@ -55,6 +48,9 @@ public class RespawnTask extends BukkitRunnable {
             // Play sound for killer as well
             playerKiller.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1.0f, 1.0f);
 
+            // Set as spectator to the player
+            player.setSpectatorTarget(playerKiller);
+
         } else { // Else the killer was an entity
 
             // Send only message to player
@@ -62,9 +58,6 @@ public class RespawnTask extends BukkitRunnable {
                     ChatColor.WHITE + "You've been slain by a monster!");
 
         }
-
-        // Set as spectator to the player
-        // player.setSpectatorTarget(playerKiller);
 
         // Set player to Spectator, show message on screen
         player.setGameMode(GameMode.SPECTATOR);

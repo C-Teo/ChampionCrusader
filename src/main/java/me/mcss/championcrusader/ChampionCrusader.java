@@ -51,29 +51,30 @@ public final class ChampionCrusader extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
-        // -= PLENTIFUL ARROW =-
+        // -= Arrow =-
         /*
         Return the arrow shot to the player
         if they hit their target.
          */
         getServer().getPluginManager().registerEvents(new GetShotListener(),this);
 
-        // -= GHOST SPAWN =-
+        // -= Respawn =-
         /*
         Properly respawn the player with a countdown
         back at their respective base. (USES TAGS AND CONFIG)
          */
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(this),this);
 
-        // -= ITEM RELOAD =-
+        // -= Cooldown =-
         /*
         Cool down mechanic for the potions given to the
         mage. Potion has to be exactly the same as the
         check to allow for multiple cool downs.
          */
         getServer().getPluginManager().registerEvents(new PotionSplashListener(this),this);
+        getServer().getPluginManager().registerEvents(new InventoryInteractListener(),this);
 
-        // -= MOB KILLER =-
+        // -= Mobs =-
         /*
         Checks the mobs that are killed and gives the
         players rewards for killing them
@@ -83,7 +84,7 @@ public final class ChampionCrusader extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityHealListener(),this);
         getServer().getPluginManager().registerEvents(new MobSpawnListener(),this);
 
-        // -= CLASS X =-
+        // -= Classes =-
         /*
         Handles all class selection commands and
         utility. poop

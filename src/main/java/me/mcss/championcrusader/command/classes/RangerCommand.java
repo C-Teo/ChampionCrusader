@@ -138,6 +138,12 @@ public class RangerCommand implements CommandExecutor {
                     player.getInventory().addItem(new ItemStack(slowness));
                     player.getInventory().addItem(new ItemStack(weakness));
 
+                    // Locked Bar
+                    // Locked Bar
+                    for (int i = 4; i < 9; i++) {
+                        player.getInventory().setItem(i,new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+                    }
+
                     // Add the player to the Class Map with this class
                     playerToClass.put(player.getName(),"ranger");
 
