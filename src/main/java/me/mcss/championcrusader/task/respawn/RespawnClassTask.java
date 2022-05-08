@@ -2,6 +2,7 @@ package me.mcss.championcrusader.task.respawn;
 
 import me.mcss.championcrusader.ChampionCrusader;
 import me.mcss.championcrusader.task.classes.LeatherTask;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,75 +14,75 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RespawnClassTask extends BukkitRunnable {
 
     private Player player;
     private final ChampionCrusader plugin;
+    public final HashMap<String, String> playerToTeam;
+    public final HashMap<String, Boolean> gameRunning;
 
     public RespawnClassTask(Player player, ChampionCrusader plugin) {
         this.player = player;
         this.plugin = plugin;
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.gameRunning = plugin.getGameRunning();
     }
 
     @Override
     public void run() {
-        if (player.getScoreboardTags().contains("ranger")){
+        if (playerToTeam.containsKey(player.getName())) {
 
-            player.getInventory().clear();
+            int arena = plugin.getConfig().getIntegerList(plugin.getPlayerToTeam().get(player.getName())).get(0);
 
-            // Giving Items
-            player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
-            player.getInventory().addItem(new ItemStack(Material.BOW));
-            player.getInventory().addItem(new ItemStack(Material.ARROW,4));
+            if (gameRunning.get("A" + arena)) {
+                if (player.getScoreboardTags().contains("ranger")) {
 
-            // Custom Arrows
+                    player.getInventory().clear();
 
-            // Slowness Arrows
-            ItemStack slowness = new ItemStack(Material.TIPPED_ARROW,2);
-            PotionMeta slownessmeta = (PotionMeta) slowness.getItemMeta();
-            slownessmeta.setBasePotionData(new PotionData(PotionType.SLOWNESS));
-            slowness.setItemMeta(slownessmeta);
+                    // Giving Items
+                    player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
+                    player.getInventory().addItem(new ItemStack(Material.BOW));
+                    player.getInventory().addItem(new ItemStack(Material.ARROW, 8));
 
-            // Weakness Arrows
-            ItemStack weakness = new ItemStack(Material.TIPPED_ARROW,2);
-            PotionMeta weaknessmeta = (PotionMeta) weakness.getItemMeta();
-            weaknessmeta.setBasePotionData(new PotionData(PotionType.WEAKNESS));
-            weakness.setItemMeta(weaknessmeta);
+                    // Locked Bar
+                    for (int i = 3; i < 9; i++) {
+                        player.getInventory().setItem(i, new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+                    }
 
+                    // Leather Task
+                    BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
 
-            // Giving players Custom Arrows
-            player.getInventory().addItem(new ItemStack(slowness));
-            player.getInventory().addItem(new ItemStack(weakness));
+                } else if (player.getScoreboardTags().contains("berserker")) {
 
-            // Leather Task
-            BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
+                    player.getInventory().clear();
 
-        } else if (player.getScoreboardTags().contains("berserker")) {
+                    // Giving Items
+                    player.getInventory().addItem(new ItemStack(Material.STONE_AXE));
 
-            player.getInventory().clear();
+                    // Giving Redstone
+                    ItemStack rage = new ItemStack(Material.REDSTONE, 1);
+                    ItemMeta ragemeta = (ItemMeta) rage.getItemMeta();
 
-            // Giving Items
-            player.getInventory().addItem(new ItemStack(Material.STONE_AXE));
+                    // Set Display and Lore
+                    ArrayList<String> redLore = new ArrayList<String>(); // Lore list
+                    redLore.add("Collect 2 and Click to activate RAGE!");
+                    redLore.add("4 for SUPER RAGE! 6 for ULTRA RAGE");
+                    ragemeta.setLore(redLore);
 
-            // Giving Redstone
-            ItemStack rage = new ItemStack(Material.REDSTONE,1);
-            ItemMeta ragemeta = (ItemMeta)rage.getItemMeta();
+                    // Display
+                    ragemeta.setDisplayName(ChatColor.RESET + "Essence Of Rage");
+                    rage.setItemMeta(ragemeta);
 
-            // Set Display and Lore
-            ragemeta.setDisplayName("Essence Of Rage");
-            ArrayList<String> redLore = new ArrayList<String>(); // Lore list
-            redLore.add("Collect 2 and Click to activate RAGE!");
-            redLore.add("4 for SUPER RAGE! 6 for ULTRA RAGE");
-            ragemeta.setLore(redLore);
-            rage.setItemMeta(ragemeta);
+                    // Giving Potions
+                    player.getInventory().addItem(rage);
 
-            // Giving Potions
-            player.getInventory().addItem(rage);
+                    // Leather Task
+                    BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
 
-            // Leather Task
-            BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
-
+                }
+            }
         }
     }
 }

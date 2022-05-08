@@ -129,7 +129,7 @@ public class BerserkerCommand implements CommandExecutor {
                     ragemeta.setLore(redLore);
 
                     // Display
-                    ragemeta.setDisplayName("Essence Of Rage");
+                    ragemeta.setDisplayName(ChatColor.RESET + "Essence Of Rage");
                     rage.setItemMeta(ragemeta);
 
                     // Giving Potions

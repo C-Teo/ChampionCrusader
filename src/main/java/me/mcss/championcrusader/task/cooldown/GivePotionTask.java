@@ -17,11 +17,13 @@ public class GivePotionTask extends BukkitRunnable {
     ChampionCrusader plugin;
     private final HashMap<String, String> playerToTeam;
     private final HashMap<String, Boolean> gameRunning;
+    int index;
 
     // Main Constructor
-    public GivePotionTask(Player player, ItemStack potion, ChampionCrusader plugin) {
+    public GivePotionTask(Player player, ItemStack potion, int index, ChampionCrusader plugin) {
         this.player = player;
         this.potion = potion;
+        this.index = index;
         this.plugin = plugin;
         this.playerToTeam = plugin.getPlayerToTeam();
         this.gameRunning = plugin.getGameRunning();
@@ -39,7 +41,7 @@ public class GivePotionTask extends BukkitRunnable {
             int arena = plugin.getConfig().getIntegerList(playerToTeam.get(player.getName())).get(0);
             if (gameRunning.get("A"+arena)) {
                 // Give them the potion, sound, and message
-                player.getInventory().addItem(potion);
+                player.getInventory().setItem(index,potion);
                 player.playSound(player.getLocation(), Sound.ENTITY_WITCH_DRINK, 0.5f, 1.0f);
                 player.sendMessage(ChatColor.GRAY + "[" + ChatColor.GREEN + "Champion Crusader" + ChatColor.GRAY
                         + "] " + ChatColor.WHITE + "A potion has refreshed!");

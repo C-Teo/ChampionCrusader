@@ -17,10 +17,14 @@ public class PotionSplashListener implements Listener { // Check when a potion s
 
     // Local Variable
     public final ChampionCrusader plugin; // Main plugin
+    public final HashMap<String, String> playerToTeam;
+    public final HashMap<String, Boolean> gameRunning;
 
     // Main Constructor
     public PotionSplashListener(ChampionCrusader plugin) {
         this.plugin = plugin;
+        this.playerToTeam = plugin.getPlayerToTeam();
+        this.gameRunning = plugin.getGameRunning();
     }
 
     @EventHandler
@@ -33,40 +37,42 @@ public class PotionSplashListener implements Listener { // Check when a potion s
             Player player = (Player) event.getPotion().getShooter();
             ItemStack potion = event.getPotion().getItem();
 
-            // If potion is REGENERATION
-            if (event.getPotion().getEffects().contains
-                    (new PotionEffect(PotionEffectType.REGENERATION,300,0))) {
+            // If the player has a Team
+            if (playerToTeam.containsKey(player.getName())) {
 
-                // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
+                int arena = plugin.getConfig().getIntegerList(plugin.getPlayerToTeam().get(player.getName())).get(0);
 
-            // If potion is POISON
-            } else if (event.getPotion().getEffects().contains
-                    (new PotionEffect(PotionEffectType.POISON,200,0))) {
+                if (gameRunning.get("A"+arena)) {
 
-                // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
+                    // If potion is REGENERATION
+                    if (event.getPotion().getEffects().contains
+                            (new PotionEffect(PotionEffectType.REGENERATION, 300, 0))) {
 
-            // If potion is HARM
-            } else if (event.getPotion().getEffects().contains
-                    (new PotionEffect(PotionEffectType.HARM,20,1))) {
+                        // Give the potion
+                        BukkitTask cooldown = new GivePotionTask(player, potion, 3, plugin).runTaskLater(this.plugin, 200L);
 
-                // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
+                        // If potion is POISON
+                    } else if (event.getPotion().getEffects().contains
+                            (new PotionEffect(PotionEffectType.POISON, 200, 0))) {
 
-            // If potion is HEAL
-            } else if (event.getPotion().getEffects().contains
-                    (new PotionEffect(PotionEffectType.HEAL,20,1))) {
+                        // Give the potion
+                        BukkitTask cooldown = new GivePotionTask(player, potion, 1, plugin).runTaskLater(this.plugin, 200L);
 
-                // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin,200L);
+                        // If potion is HARM
+                    } else if (event.getPotion().getEffects().contains
+                            (new PotionEffect(PotionEffectType.HARM, 20, 1))) {
 
-            // If potion is STRENGTH
-            } else if (event.getPotion().getEffects().contains
-                    (new PotionEffect(PotionEffectType.INCREASE_DAMAGE,200,0))) {
+                        // Give the potion
+                        BukkitTask cooldown = new GivePotionTask(player, potion, 2, plugin).runTaskLater(this.plugin, 200L);
 
-                // Give the potion
-                BukkitTask cooldown = new GivePotionTask(player, potion, plugin).runTaskLater(this.plugin, 200L);
+                        // If potion is HEAL
+                    } else if (event.getPotion().getEffects().contains
+                            (new PotionEffect(PotionEffectType.HEAL, 20, 1))) {
+
+                        // Give the potion
+                        BukkitTask cooldown = new GivePotionTask(player, potion, 4, plugin).runTaskLater(this.plugin, 200L);
+                    }
+                }
             }
         }
     }

@@ -24,17 +24,21 @@ public class KillClassTask extends BukkitRunnable {
     @Override
     public void run() {
         if (player.getScoreboardTags().contains("berserker")) {
-            // Giving Redstone Mechanic
-            ItemStack rage = new ItemStack(Material.REDSTONE,1);
-            ItemMeta ragemeta = (ItemMeta)rage.getItemMeta();
+            // Giving Redstone
+            ItemStack rage = new ItemStack(Material.REDSTONE, 1);
+            ItemMeta ragemeta = (ItemMeta) rage.getItemMeta();
 
             // Set Display and Lore
-            ragemeta.setDisplayName("Essence Of Rage");
             ArrayList<String> redLore = new ArrayList<String>(); // Lore list
             redLore.add("Collect 2 and Click to activate RAGE!");
             redLore.add("4 for SUPER RAGE! 6 for ULTRA RAGE");
             ragemeta.setLore(redLore);
+
+            // Display
+            ragemeta.setDisplayName(ChatColor.RESET + "Essence Of Rage");
             rage.setItemMeta(ragemeta);
+
+            // Giving Potions
             player.getInventory().addItem(rage);
 
             // Message the killer they got their rage
