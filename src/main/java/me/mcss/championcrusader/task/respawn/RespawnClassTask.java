@@ -78,6 +78,10 @@ public class RespawnClassTask extends BukkitRunnable {
                     // Giving Potions
                     player.getInventory().addItem(rage);
 
+                    for (int i = 2; i < 9; i++) {
+                        player.getInventory().setItem(i, new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+                    }
+
                     // Leather Task
                     BukkitTask leatherTask = new LeatherTask(player).runTask(plugin);
 

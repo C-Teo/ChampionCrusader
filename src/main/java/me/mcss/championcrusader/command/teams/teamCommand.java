@@ -7,6 +7,7 @@ import me.mcss.championcrusader.task.respawn.CountdownTask;
 import me.mcss.championcrusader.task.tutorial.tutorialTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -174,11 +175,11 @@ public class teamCommand implements CommandExecutor {
      */
     public void tutorial(Player player) {
         BukkitTask msgOne = new tutorialTask(1,player).runTask(plugin);
-        BukkitTask msgTwo = new tutorialTask(2,player).runTaskLater(plugin,200);
-        BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,400);
-        BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,600);
-        BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,800);
-        BukkitTask msgSix = new tutorialTask(6,player).runTaskLater(plugin,1000);
+        BukkitTask msgTwo = new tutorialTask(2,player).runTaskLater(plugin,200L);
+        BukkitTask msgThree = new tutorialTask(3,player).runTaskLater(plugin,400L);
+        BukkitTask msgFour = new tutorialTask(4,player).runTaskLater(plugin,600L);
+        BukkitTask msgFive = new tutorialTask(5,player).runTaskLater(plugin,800L);
+        BukkitTask msgSix = new tutorialTask(6,player).runTaskLater(plugin,1000L);
     }
 
     /**
@@ -192,6 +193,7 @@ public class teamCommand implements CommandExecutor {
                 "function champcrusaders:gamestarttimer");
         // Send countdown to each Player.
         for (Player user : player.getWorld().getPlayers()) {
+            user.setGameMode(GameMode.ADVENTURE);
             BukkitTask countThree = new CountdownTask(user, ChatColor.RED + "3", 0.4f).runTaskLater(this.plugin,15L);
             BukkitTask countTwo = new CountdownTask(user, ChatColor.YELLOW + "2", 0.6f).runTaskLater(this.plugin, 30L);
             BukkitTask countOne = new CountdownTask(user, ChatColor.GREEN + "1", 0.8f).runTaskLater(this.plugin, 45L);
@@ -242,13 +244,7 @@ public class teamCommand implements CommandExecutor {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
                 "minecraft:kill @e[type=minecraft:armor_stand]");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "function champcrusaders:resetdoor1");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "function champcrusaders:resetdoor2");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "function champcrusaders:resetdoor3");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "function champcrusaders:resetdoor4");
+                "function champcrusaders:resetalldoors");
         // Reset all Classes
         playerToClass.clear();
         // Reset the Ready Status of each Team
