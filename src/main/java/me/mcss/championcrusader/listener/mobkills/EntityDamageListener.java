@@ -41,6 +41,13 @@ public class EntityDamageListener implements Listener {
                             + "You killed a Mob! Have some heals!");
                     playerKiller.playSound(playerKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
 
+                    // Check if the Player is a Ranger and needs an Arrow
+                    if (playerKiller.getScoreboardTags().contains("ranger")) {
+                        if (!playerKiller.getInventory().contains(new ItemStack(Material.ARROW))) {
+                            playerKiller.getInventory().setItem(5,new ItemStack(Material.ARROW));
+                        }
+                    }
+
                     // Healing the killer
                     if (playerKiller.getHealth() + 6 > 20.0) {
                         playerKiller.setHealth(20.0);

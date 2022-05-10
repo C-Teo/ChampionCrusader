@@ -42,9 +42,7 @@ public class RespawnClassTask extends BukkitRunnable {
                     player.getInventory().clear();
 
                     // Giving Items
-                    player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
-                    player.getInventory().addItem(new ItemStack(Material.BOW));
-                    player.getInventory().addItem(new ItemStack(Material.ARROW, 8));
+                    player.getInventory().setItem(2,new ItemStack(Material.ARROW, 8));
 
                     // Locked Bar
                     for (int i = 3; i < 9; i++) {
